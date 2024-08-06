@@ -16,4 +16,4 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Initialize atuin
-eval "$(atuin init zsh)"
+! which atuin >/dev/null 2>&1 || eval "$(atuin init zsh)"
