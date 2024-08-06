@@ -18,5 +18,11 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ~/.p10k.zsh
 
+# Init brew env !!![NEEDS TO BE BEFORE THE ATUIN LINE]!!!
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # Initialize atuin
 eval "$(atuin init zsh)"
+
+# Initialize zoxide and overwrites the cd command
+eval "$(zoxide init --cmd=cd zsh)"
