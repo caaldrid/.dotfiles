@@ -26,3 +26,9 @@ eval "$(atuin init zsh)"
 
 # Initialize zoxide and overwrites the cd command
 eval "$(zoxide init --cmd=cd zsh)"
+
+# Enable vivid color theme
+export LS_COLORS="$(vivid generate molokai)"
+
+# Pull in all my custom functions
+source $XDG_CONFIG_HOME/custom/aliases.zsh
