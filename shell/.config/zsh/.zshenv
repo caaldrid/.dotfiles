@@ -1,1 +1,1 @@
-export IT_WORKED="IT WORKED!!!"
+# Remember that you need to fully load zsh again after modifying.
