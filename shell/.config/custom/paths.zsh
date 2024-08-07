@@ -1,0 +1,1 @@
+addToPath "$HOME/go/bin"
