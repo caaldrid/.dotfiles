@@ -47,10 +47,10 @@ parse_long_options "$@"
 
 
 # Make sure the default shell is a zsh
-if [[ ! "$SHELL" ==  *"zsh"* ]]; then
-	echo >&2 "We expect zsh is set as the default shell"
-	exit 1
-fi
+#if [[ ! "$SHELL" ==  *"zsh"* ]]; then
+#	echo >&2 "We expect zsh is set as the default shell"
+#	exit 1
+#fi
 
 # Throw an error if stow is not installed
 command=stow
@@ -59,15 +59,17 @@ if ! which $command >/dev/null 2>&1; then
     exit 1
 fi
 
+project_dir=$(dirname "$(readlink -f "$0")")
+
 # Capture the output of uname -s
 os_name=$(uname -s)
 
 # Load parameters based on the os
 if [ "$os_name" = "Linux" ]; then
-	if [ -f "./script-params/linux" ]; then
-		source ./script-params/linux
+	if [ -f "$project_dir/script-params/linux" ]; then
+		source "$project_dir/script-params/linux"
 	else
-		echo >&2 "The file \`script-params/linux\` corresponding to $os_name OS is missing in $pwd"
+		echo >&2 "The file \`$project_dir/script-params/linux\` corresponding to $os_name OS is missing"
 		exit 1
 	fi
 else
@@ -80,12 +82,13 @@ echo "Will now iterate through the following directories: \n\t- $(echo $FOLDERS_
 # Loop through the given folders that we are told to stow and run command
 for folder in $(echo $FOLDERS_TO_STOW | sed "s/,/ /g")
 do
-	if [ -d "./$folder" ];then
+	target=$project_dir/$folder
+	if [ -d "$target" ];then
 		echo "\n----------Processing $folder----------"
-	    	stow -v --target=$HOME -D $folder
-	    	$clean_only || stow -v --target=$HOME $folder # don't run if we are in clean-only mode
+	    	stow -v --target=$HOME --dir=$project_dir -D $folder
+	    	$clean_only || stow -v --target=$HOME --dir=$project_dir $folder # don't run if we are in clean-only mode
 	else
-		echo >&2 "$folder does not exist in $pwd"
+		echo >&2 "$folder does not exist in $project_dir"
 		exit 1
 	fi
 done
