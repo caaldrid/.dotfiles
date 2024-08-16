@@ -8,7 +8,7 @@ eval "$(atuin init zsh)"
 eval "$(zoxide init --cmd=cd zsh)"
 
 # Initialize oh-my-posh and set theme
-eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/powerlevel10k_rainbow.omp.json)"
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/theme.omp.json)"
 
 # Enable vivid color theme
 export LS_COLORS="$(vivid generate molokai)"
