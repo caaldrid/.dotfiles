@@ -13,6 +13,10 @@ eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/theme.omp.json)"
 # Enable vivid color theme
 export LS_COLORS="$(vivid generate molokai)"
 
+# Enable NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+
 # Pull in all my custom functions
 source $XDG_CONFIG_HOME/custom/functions.zsh
 
