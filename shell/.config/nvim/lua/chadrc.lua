@@ -28,4 +28,7 @@ M.ui = {
     },
   },
 }
+
+M.mason = { pkgs = { "delve" } }
+
 return M
