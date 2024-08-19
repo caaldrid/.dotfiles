@@ -1,3 +1,6 @@
+-- load defaults i.e lua_lsp
+require("nvchad.configs.lspconfig").defaults()
+
 local nvlsp = require "nvchad.configs.lspconfig"
 
 local lspconfig = require "lspconfig"
@@ -16,6 +19,18 @@ local setup = function(_, opts)
   -- And servers you install through mason UI
   -- So defining servers in the list above is optional
   require("mason-lspconfig").setup_handlers {
+    -- Default setup for all servers, unless a custom one is defined below
+    function(server_name)
+      lspconfig[server_name].setup {
+        on_attach = function(client, bufnr)
+          nvlsp.on_attach(client, bufnr)
+          -- Add your other things here
+          -- Example being format on save or something
+        end,
+        capabilities = nvlsp.capabilities,
+        on_init = nvlsp.on_init,
+      }
+    end,
     -- configuring gopls lsp
     ["gopls"] = function()
       lspconfig.gopls.setup {
@@ -38,6 +53,9 @@ local setup = function(_, opts)
         },
       }
     end,
+
+    -- Here, we disable lua_ls so we can use NvChad's default config
+    ["lua_ls"] = function() end,
   }
 end
 
@@ -56,7 +74,6 @@ local spec = {
       end,
     },
     "williamboman/mason-lspconfig",
-    -- TODO: Add mason-null-ls? mason-dap?
   },
 }
 

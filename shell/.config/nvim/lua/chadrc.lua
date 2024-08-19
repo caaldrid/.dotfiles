@@ -29,6 +29,6 @@ M.ui = {
   },
 }
 
-M.mason = { pkgs = { "delve" } }
+M.mason = { pkgs = { "delve", "lua-language-server" } }
 
 return M
