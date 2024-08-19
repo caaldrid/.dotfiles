@@ -17,4 +17,23 @@ return {
       filters = { dotfiles = false, custom = { "^\\.git$" } },
     },
   },
+
+  ---@type NvPluginSpec
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim",
+        "lua",
+        "vimdoc",
+        "c_sharp",
+        "go",
+        "gomod",
+        "bash",
+        "markdown",
+        "markdown_inline",
+      },
+    },
+  },
+
 }
