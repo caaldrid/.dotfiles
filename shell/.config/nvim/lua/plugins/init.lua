@@ -36,4 +36,9 @@ return {
     },
   },
 
+  ---@type NvPluginSpec
+  { import = "configs.dap" },
+
+  ---@type NvPluginSpec
+  { import = "configs.dap-go" },
 }
