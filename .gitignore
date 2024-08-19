@@ -1,1 +1,3 @@
 /shell/.config/zsh/.zcompdump*
+/shell/.config/go/**
+/shell/.config/gh/**
