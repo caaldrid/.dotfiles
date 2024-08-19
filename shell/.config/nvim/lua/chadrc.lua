@@ -6,7 +6,6 @@ local M = {}
 
 M.base46 = {
   theme = "github_dark",
-
   -- hl_override = {
   -- 	Comment = { italic = true },
   -- 	["@comment"] = { italic = true },
@@ -27,6 +26,7 @@ M.ui = {
       [[                                                    ]],
     },
   },
+  statusline = { theme = "vscode_colored" },
 }
 
 M.mason = { pkgs = { "delve", "lua-language-server" } }
