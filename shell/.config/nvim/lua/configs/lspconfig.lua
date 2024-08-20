@@ -10,7 +10,7 @@ local setup = function(_, opts)
   require("mason").setup(opts)
   require "mason-core.package"
 
-  local lspservers = { "gopls" }
+  local lspservers = { "gopls", "lua_ls", "bashls" }
   require("mason-lspconfig").setup {
     ensure_installed = lspservers,
   }

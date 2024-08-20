@@ -29,6 +29,6 @@ M.ui = {
   statusline = { theme = "vscode_colored" },
 }
 
-M.mason = { pkgs = { "delve", "lua-language-server" } }
+M.mason = { pkgs = { "delve" } }
 
 return M
