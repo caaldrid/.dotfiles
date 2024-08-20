@@ -1,4 +1,0 @@
-#!/usr/bin/env zsh
-if [[ -z $FOLDERS_TO_STOW ]]; then
-    FOLDERS_TO_STOW="shell"
-fi
