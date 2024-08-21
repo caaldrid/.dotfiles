@@ -41,4 +41,7 @@ return {
 
   ---@type NvPluginSpec
   { import = "configs.dap-go" },
+
+  ---@type NvPluginSpec
+  { import = "configs.gitsigns" },
 }
