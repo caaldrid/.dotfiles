@@ -44,4 +44,7 @@ return {
 
   ---@type NvPluginSpec
   { import = "configs.gitsigns" },
+
+  ---@type NvPluginSpec
+  { import = "configs.git-fugitive" },
 }
