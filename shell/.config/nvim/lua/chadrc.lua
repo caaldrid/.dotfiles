@@ -6,10 +6,7 @@ local M = {}
 
 M.base46 = {
   theme = "github_dark",
-  -- hl_override = {
-  -- 	Comment = { italic = true },
-  -- 	["@comment"] = { italic = true },
-  -- },
+  transparency = true,
 }
 
 M.ui = {
@@ -27,6 +24,7 @@ M.ui = {
     },
   },
   statusline = { theme = "vscode_colored" },
+  telescope = { style = "bordered" },
 }
 
 M.mason = { pkgs = { "delve" } }
