@@ -8,6 +8,12 @@ local spec = {
       "<CMD> G pull '--rebase' <cr>",
       desc = "Git Pull",
     },
+    {
+      mode = "n",
+      "<leader>gp",
+      "<CMD> G push",
+      desc = "Git Push",
+    },
   },
 }
 
