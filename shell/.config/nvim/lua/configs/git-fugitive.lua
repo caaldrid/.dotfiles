@@ -11,7 +11,7 @@ local spec = {
     {
       mode = "n",
       "<leader>gp",
-      "<CMD> G push",
+      "<CMD> G push <cr>",
       desc = "Git Push",
     },
   },
