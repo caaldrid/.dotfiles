@@ -1,6 +1,7 @@
 ---@type NvPluginSpec
 local spec = {
   "tpope/vim-fugitive",
+  cmd = { "Git", "G" },
   keys = {
     {
       mode = "n",
