@@ -47,4 +47,12 @@ return {
 
   ---@type NvPluginSpec
   { import = "configs.git-fugitive" },
+
+  ---@type NvPluginSpec
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+  },
 }
