@@ -1,6 +1,15 @@
 # Init brew env !!![NEEDS TO BE FIRST]!!!
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# Update Completions
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
 # Initialize atuin
 eval "$(atuin init zsh)"
 
