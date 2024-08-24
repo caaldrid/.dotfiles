@@ -9,6 +9,9 @@ A repository for me to save the general set-up of my terminal based dev environm
 - [Brew](brew.sh)
 - [DevelopersToolbox/ini-file-parser](https://github.com/DevelopersToolbox/ini-file-parser)
 
+## Acknowledgements
+- [ThePrimeagen](https://github.com/ThePrimeagen) who not only inspired this repo but also because I basically coppied his [tmux-sessionizer](https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer)
+
 ## Docker
 This repo includes an ubuntu dockerfile to help better test this script as it requires a clean enviroment each time. Run the following commands from the root of the repo to properly build the image as it creates a user with password/sudo rights that you need to specify at buildtime.
 
