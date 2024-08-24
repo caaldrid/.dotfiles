@@ -1,8 +1,19 @@
 require "nvchad.mappings"
 
 local map = vim.keymap.set
+local nomap = vim.keymap.del
+
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
+
+-- Overwrite defaults from nvchad
+nomap("n", "<leader>fa")
+map(
+  "n",
+  "<leader>ff",
+  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+  { desc = "telescope find files" }
+)
 
 -- Mappings for dap plugin
 map("n", "<leader>dtb", "<CMD> DapToggleBreakpoint <CR>", { desc = "Toggle diagnostics" })
