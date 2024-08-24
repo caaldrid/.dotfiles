@@ -4,7 +4,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Update Completions
 if type brew &>/dev/null
 then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  FPATH="$(brew --prefix)/share/zsh/site-functions:$(brew --prefix)/Cellar/fzf/0.54.3/shell/completion.zsh:${FPATH}"
 
   autoload -Uz compinit
   compinit
@@ -34,3 +34,9 @@ source $XDG_CONFIG_HOME/custom/paths.zsh
 
 # Pull in all my custom functions
 source $XDG_CONFIG_HOME/custom/aliases.zsh
+
+# Pull in all my custom keybinds
+source $XDG_CONFIG_HOME/custom/keybinds.zsh
+
+# Attach to TMUX from the get go
+[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
