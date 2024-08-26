@@ -2,3 +2,6 @@
 /shell/.config/go/**
 /shell/.config/gh/**
 /shell/.config/dlv/**
+
+/tmux/.config/tmux/plugins/*
+!/tmux/.config/tmux/plugins/tpm/
