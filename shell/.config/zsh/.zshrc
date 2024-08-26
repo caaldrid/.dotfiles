@@ -38,5 +38,4 @@ source $XDG_CONFIG_HOME/custom/aliases.zsh
 # Pull in all my custom keybinds
 source $XDG_CONFIG_HOME/custom/keybinds.zsh
 
-# Attach to TMUX from the get go
-[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
+
