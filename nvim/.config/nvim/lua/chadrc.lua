@@ -31,7 +31,15 @@ M.ui = {
       { "  Mappings", "Spc c h", "NvCheatsheet" },
     },
   },
-  statusline = { theme = "vscode_colored" },
+  statusline = {
+    theme = "default",
+    modules = {
+      cursor = function()
+        return "%#StText# Ln %l, Col %c  "
+      end,
+    },
+    order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cursor", "cwd" },
+  },
   telescope = { style = "bordered" },
 }
 
