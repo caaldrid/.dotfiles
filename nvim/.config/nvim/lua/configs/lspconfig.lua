@@ -10,7 +10,7 @@ local setup = function(_, opts)
   require("mason").setup(opts)
   require "mason-core.package"
 
-  local lspservers = { "gopls", "lua_ls", "bashls" }
+  local lspservers = { "gopls", "lua_ls", "bashls", "pyright" }
   require("mason-lspconfig").setup {
     ensure_installed = lspservers,
   }
@@ -51,6 +51,14 @@ local setup = function(_, opts)
             staticcheck = true,
           },
         },
+      }
+    end,
+
+    ["pyright"] = function()
+      lspconfig.pyright.setup {
+        on_attach = nvlsp.on_attach,
+        on_init = nvlsp.on_init,
+        filetypes = { "python" },
       }
     end,
 

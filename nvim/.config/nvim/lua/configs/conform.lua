@@ -3,6 +3,7 @@ local options = {
     lua = { "stylua" },
     go = { "gofumpt", "goimports-reviser", "golines" },
     sh = { "shellcheck", "shfmt" },
+    python = { "isort", "black" },
   },
 
   format_on_save = {
