@@ -32,6 +32,7 @@ return {
         "bash",
         "markdown",
         "markdown_inline",
+        "python",
       },
     },
   },
