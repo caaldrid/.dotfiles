@@ -25,9 +25,11 @@ end, { desc = "Open debugging sidebar" })
 
 -- Mappings for dap-go
 map("n", "<leader>dgt", function()
+  ---@diagnostic disable-next-line: undefined-field
   require("dap-go").debug_test()
 end, { desc = "Debug go test" })
 map("n", "<leader>dgl", function()
+  ---@diagnostic disable-next-line: undefined-field
   require("dap-go").debug_last_test()
 end, { desc = "Debug last go test" })
 
