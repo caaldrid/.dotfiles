@@ -29,6 +29,7 @@ end
 ---@type NvPluginSpec
 local spec = {
   "mfussenegger/nvim-dap",
+  ft = { "go", "python" },
   config = function()
     setup()
   end,
