@@ -16,12 +16,8 @@ map(
 )
 
 -- Mappings for dap plugin
-map("n", "<leader>dtb", "<CMD> DapToggleBreakpoint <CR>", { desc = "Toggle diagnostics" })
-map("n", "<leader>dus", function()
-  local widgets = require "dap.ui.widgets"
-  local sidebar = widgets.sidebar(widgets.scopes)
-  sidebar.open()
-end, { desc = "Open debugging sidebar" })
+map("n", "<leader>db", "<CMD> DapToggleBreakpoint <CR>", { desc = "Toggle diagnostics" })
+map("n", "<leader><F5>", "<CMD> DapNew <CR>", { desc = "Start Debugger" })
 
 -- Mappings for dap-go
 map("n", "<leader>dgt", function()
