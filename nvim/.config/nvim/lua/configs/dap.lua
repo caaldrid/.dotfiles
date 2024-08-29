@@ -1,38 +1,64 @@
-local setup = function()
-  local dap = require "dap"
-  local get_python_path = require "helpers.python-path"
+local specs = {
+  ---@type NvPluginSpec
+  {
+    "mfussenegger/nvim-dap",
+  },
+  ---@type NvPluginSpec
+  {
+    "leoluz/nvim-dap-go",
+    ft = "go",
+    dependencies = "mfussenegger/nvim-dap",
+    config = function()
+      -- Configure dap-go with the Mason installed DAP
+      require("dap-go").setup {
+        delve = {
+          path = vim.fn.stdpath "data" .. "/mason/bin/dlv",
+        },
+      }
+    end,
+  },
+  ---@type NvPluginSpec
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    config = function()
+      local get_python_path = require "helpers.python-path"
+      require("dap-python").setup(get_python_path(vim.fn.getcwd()))
+    end,
+  },
+  ---@type NvPluginSpec
+  {
+    "rcarriga/nvim-dap-ui",
+    ft = { "go", "python" },
+    config = function()
+      local dap, dapui = require "dap", require "dapui"
+      dapui.setup()
 
-  dap.adapters.python = {
-    type = "executable",
-    command = get_python_path(vim.fn.getcwd()),
-    args = { "-m", "debugpy.adapter" },
-  }
+      ---@diagnostic disable-next-line: undefined-field
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
 
-  dap.configurations.python = {
-    {
-      -- The first three options are required by nvim-dap
-      type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
-      request = "launch",
-      name = "Launch file",
+      ---@diagnostic disable-next-line: undefined-field
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
 
-      -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+      ---@diagnostic disable-next-line: undefined-field
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
 
-      program = "${file}", -- This configuration will launch the current file if used.
-      pythonPath = function()
-        -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-        return get_python_path(vim.fn.getcwd())
-      end,
+      ---@diagnostic disable-next-line: undefined-field
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
+    end,
+    dependencies = {
+      { "mfussenegger/nvim-dap" },
+      { "nvim-neotest/nvim-nio" },
     },
-  }
-end
-
----@type NvPluginSpec
-local spec = {
-  "mfussenegger/nvim-dap",
-  ft = { "go", "python" },
-  config = function()
-    setup()
-  end,
+  },
 }
 
-return spec
+return specs
