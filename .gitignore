@@ -5,3 +5,6 @@
 
 /tmux/.config/tmux/plugins/*
 !/tmux/.config/tmux/plugins/tpm/
+
+/bin/.local/*
+!/bin/.local/scripts
