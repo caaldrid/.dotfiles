@@ -15,6 +15,9 @@ local setup = function(_, opts)
     ensure_installed = lspservers,
   }
 
+  -- Make sure lsp picks up newly added files
+  nvlsp.capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+
   -- This will setup lsp for servers you listed above
   -- And servers you install through mason UI
   -- So defining servers in the list above is optional
@@ -59,7 +62,7 @@ local setup = function(_, opts)
         on_attach = nvlsp.on_attach,
         before_init = function(_, config)
           local get_python_path = require "helpers.python-path"
-          config.settings.python.pythonPath = get_python_path(config.root_dir)
+          config.settings.python.pythonPath = get_python_path(vim.fn.getcwd())
         end,
         on_init = nvlsp.on_init,
         capabilities = nvlsp.capabilities,
