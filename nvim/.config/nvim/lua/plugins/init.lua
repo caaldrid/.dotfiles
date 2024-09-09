@@ -53,4 +53,17 @@ return {
       require("colorizer").setup()
     end,
   },
+
+  ---@type NvPluginSpec
+  {
+    "hrsh7th/nvim-cmp",
+    config = function(_, opts)
+      table.insert(opts.sources, { name = "neorg" })
+      require("cmp").setup(opts)
+    end,
+    dependencies = {
+      ---@type NvPluginSpec
+      { import = "configs.neorg" },
+    },
+  },
 }
