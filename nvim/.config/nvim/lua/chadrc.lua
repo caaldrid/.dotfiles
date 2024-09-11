@@ -41,6 +41,9 @@ M.ui = {
     order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cursor", "cwd" },
   },
   telescope = { style = "bordered" },
+  tabufline = {
+    order = { "treeOffset", "buffers", "tabs" },
+  },
 }
 
 M.mason = { pkgs = { "delve" } }
