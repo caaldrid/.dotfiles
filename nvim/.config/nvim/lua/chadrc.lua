@@ -5,7 +5,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "dark_horizon",
+  theme = "onedark",
   transparency = true,
 }
 
@@ -49,6 +49,10 @@ M.nvdash = {
 
     { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
   },
+}
+
+M.cheatsheet = {
+  theme = "simple",
 }
 
 M.mason = { pkgs = { "delve" } }
