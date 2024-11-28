@@ -1,13 +1,18 @@
 # Init brew env !!![NEEDS TO BE FIRST]!!!
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+load_brew
 
 # Update Completions
 if type brew &>/dev/null
 then
   FPATH="$(brew --prefix)/share/zsh/site-functions:$(brew --prefix)/Cellar/fzf/0.54.3/shell/completion.zsh:${FPATH}"
-
+os_name=$(uname -s)
   autoload -Uz compinit
-  compinit
+  if [[ "$os_name" == "Darwin" ]]; then
+    compinit -u
+  else
+    compinit
+  fi
+
 fi
 
 # Initialize atuin

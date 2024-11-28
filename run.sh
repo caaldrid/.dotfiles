@@ -7,7 +7,6 @@ usage() {
   exit 1
 }
 
-load_brew() { test -f /home/linuxbrew/.linuxbrew/bin/brew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; }
 
 OPT_C=false
 OPT_S=false
@@ -28,7 +27,7 @@ shift $((OPTIND - 1))
 
 # Source ini-file-parser from the web to unlock functions for reading the config.ini file
 # shellcheck source=https://raw.githubusercontent.com/developerstoolbox/ini-file-parser/HEAD/src/ini-file-parser.sh
-source <(curl -fsSL https://raw.githubusercontent.com/developerstoolbox/ini-file-parser/HEAD/src/ini-file-parser.sh)
+source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/developerstoolbox/ini-file-parser/HEAD/src/ini-file-parser.sh)"
 
 # Determine project directory and process the config file
 project_dir=$(dirname "$(readlink -f "$0")")
@@ -36,16 +35,17 @@ config_path="$project_dir/config.ini"
 process_ini_file "$config_path"
 
 # Load brew into PATH
+source "$project_dir/bin/.local/scripts/load_brew.sh"
 load_brew
 
 if [ "$OPT_S" = false ] && [ "$OPT_C" = false ]; then
   # Install brew if we don't have it already
   if ! which brew >/dev/null 2>&1; then
     bash <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
-  fi
 
-  # Load brew into PATH again incase we didn't before
-  load_brew
+    # Load brew into PATH again incase we didn't before
+    load_brew
+  fi
 
   # Make sure we know where brew is
   if ! which brew >/dev/null 2>&1; then
@@ -59,6 +59,16 @@ if [ "$OPT_S" = false ] && [ "$OPT_C" = false ]; then
   # Iterate through the pkgs config section to install programs
   for pkg_installer in ${pkgs_keys[@]}; do
     install_cmd=$(get_value "installer_cmd" "$pkg_installer")
+
+    # Make sure to user brewuser on mac
+    if [[ "$pkg_installer" == "brew" ]]; then
+      os_name=$(uname -s)
+      if [[ "$os_name" == "Darwin" ]]; then
+        install_cmd="sudo -Hu '$brewser' brew install"
+        echo $install_cmd
+      fi
+    fi
+
     pkg_list=$(get_value "pkgs" "$pkg_installer")
 
     for pkg in $(echo "$pkg_list" | sed "s/,/ /g"); do
@@ -117,17 +127,5 @@ for os_name in ${stow_folders_keys[@]}; do
     fi
   done
 done
-
-# Set zsh as the default shell if it isn't
-if [[ ! "$SHELL" == *"zsh"* ]]; then
-  printf "\n---------- ADDING ZSH TO /etc/shells ----------"
-  echo "$(brew --prefix)/bin/zsh" | sudo tee -a /etc/shells
-
-  # Set zsh as default shell
-  printf "\n---------- SETTING DEFAULT SHELL TO ZSH ----------"
-  chsh -s "$(command -v zsh)"
-  # Run ZSH
-  exec zsh
-fi
 
 exit 0

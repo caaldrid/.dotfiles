@@ -4,5 +4,6 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # Source the main .zshrc from the new location
 if [ -f "$ZDOTDIR/.zshrc" ]; then
+    source "$HOME/.local/scripts/load_brew.sh"
     source "$ZDOTDIR/.zshrc"
 fi
