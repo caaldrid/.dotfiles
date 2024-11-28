@@ -3,10 +3,7 @@
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$({
-    find "$HOME" -mindepth 1 -maxdepth 1 \( -not -path "*Code*" \) &
-    find "$HOME" -mindepth 4 -maxdepth 4 -type d \( -path "*Code/*" \)
-  } | fzf)
+  selected=$(zoxide query | fzf)
 fi
 
 if [[ -z $selected ]]; then
