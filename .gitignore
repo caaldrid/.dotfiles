@@ -1,3 +1,4 @@
+/shell/.config/zsh/.zsh_history
 /shell/.config/zsh/.zcompdump*
 /shell/.config/go/**
 /shell/.config/gh/**

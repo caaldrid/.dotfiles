@@ -1,4 +1,5 @@
 # Init brew env !!![NEEDS TO BE FIRST]!!!
+source "$HOME/.local/scripts/load_brew.sh"
 load_brew
 
 # Update Completions
