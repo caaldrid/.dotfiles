@@ -17,10 +17,10 @@ map(
 
 -- Mappings for gitsigns
 map("n", "<leader>gb", "<CMD> Gitsigns blame_line <cr>", { desc = "Git Blame Line" })
-map("n", "<leader>ph", "<CMD> Gitsigns preview_hunk <cr>", { desc = "Preview Git Hunk" })
-map("n", "<leader>gsh", "<CMD> Gitsigns stage_hunk <cr>", { desc = "Stage Git Hunk" })
-map("n", "<leader>rh", "<CMD> Gitsigns reset_hunk <cr>", { desc = "Reset Git Hunk" })
-map("n", "<leader>ush", "<CMD> Gitsigns undo_stage_hunk <cr>", { desc = "Unstage Git Hunk" })
+map("n", "<leader>gp", "<CMD> Gitsigns preview_hunk <cr>", { desc = "Preview Git Hunk" })
+map("n", "<leader>gs", "<CMD> Gitsigns stage_hunk <cr>", { desc = "Stage Git Hunk" })
+map("n", "<leader>gr", "<CMD> Gitsigns reset_hunk <cr>", { desc = "Reset Git Hunk" })
+map("n", "<leader>gsu", "<CMD> Gitsigns undo_stage_hunk <cr>", { desc = "Unstage Git Hunk" })
 
 -- Mappings for fugitive
 map("n", "<leader>gP", "<CMD> G pull '--rebase' <cr>", { desc = "Git Pull" })
