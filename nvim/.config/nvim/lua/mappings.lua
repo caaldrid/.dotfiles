@@ -15,20 +15,6 @@ map(
   { desc = "telescope find files" }
 )
 
--- Mappings for dap plugin
-map("n", "<leader>db", "<CMD> DapToggleBreakpoint <CR>", { desc = "Toggle diagnostics" })
-map("n", "<leader><F5>", "<CMD> DapNew <CR>", { desc = "Start Debugger" })
-
--- Mappings for dap-go
-map("n", "<leader>dgt", function()
-  ---@diagnostic disable-next-line: undefined-field
-  require("dap-go").debug_test()
-end, { desc = "Debug go test" })
-map("n", "<leader>dgl", function()
-  ---@diagnostic disable-next-line: undefined-field
-  require("dap-go").debug_last_test()
-end, { desc = "Debug last go test" })
-
 -- Mappings for gitsigns
 map("n", "<leader>gb", "<CMD> Gitsigns blame_line <cr>", { desc = "Git Blame Line" })
 map("n", "<leader>ph", "<CMD> Gitsigns preview_hunk <cr>", { desc = "Preview Git Hunk" })
