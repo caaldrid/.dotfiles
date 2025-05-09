@@ -50,4 +50,20 @@ return {
       require("colorizer").setup()
     end,
   },
+
+  ---@type NvPluginSpec
+  {
+    "nvim-telescope/telescope.nvim",
+    config = function()
+      require("telescope").setup {
+        pickers = {
+          live_grep = {
+            additional_args = function(opts)
+              return { "--hidden" }
+            end,
+          },
+        },
+      }
+    end,
+  },
 }
