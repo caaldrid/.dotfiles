@@ -21,7 +21,7 @@ local setup = function(_, opts)
   -- This will setup lsp for servers you listed above
   -- And servers you install through mason UI
   -- So defining servers in the list above is optional
-  require("mason-lspconfig").setup_handlers {
+  require("mason-lspconfig").setup {
     -- Default setup for all servers, unless a custom one is defined below
     function(server_name)
       lspconfig[server_name].setup {
@@ -34,44 +34,37 @@ local setup = function(_, opts)
         on_init = nvlsp.on_init,
       }
     end,
-    -- configuring gopls lsp
-    ["gopls"] = function()
-      lspconfig.gopls.setup {
-        cmd = { "gopls" },
-        on_attach = nvlsp.on_attach,
-        on_init = nvlsp.on_init,
-        capabilities = nvlsp.capabilities,
-        filetypes = { "go", "gomod", "gowork", "gotmpl" },
-        root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-        settings = {
-          gopls = {
-            completeUnimported = true,
-            usePlaceholders = true,
-            analyses = {
-              unusedparams = true,
-              deprecated = true,
-            },
-            staticcheck = true,
-          },
+  }
+  -- configuring gopls lsp
+  lspconfig.gopls.setup {
+    cmd = { "gopls" },
+    on_attach = nvlsp.on_attach,
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+    settings = {
+      gopls = {
+        completeUnimported = true,
+        usePlaceholders = true,
+        analyses = {
+          unusedparams = true,
+          deprecated = true,
         },
-      }
-    end,
+        staticcheck = true,
+      },
+    },
+  }
 
-    ["pyright"] = function()
-      lspconfig.pyright.setup {
-        on_attach = nvlsp.on_attach,
-        before_init = function(_, config)
-          local get_python_path = require "helpers.python-path"
-          config.settings.python.pythonPath = get_python_path(vim.fn.getcwd())
-        end,
-        on_init = nvlsp.on_init,
-        capabilities = nvlsp.capabilities,
-        filetypes = { "python" },
-      }
+  lspconfig.pyright.setup {
+    on_attach = nvlsp.on_attach,
+    before_init = function(_, config)
+      local get_python_path = require "helpers.python-path"
+      config.settings.python.pythonPath = get_python_path(vim.fn.getcwd())
     end,
-
-    -- Here, we disable lua_ls so we can use NvChad's default config
-    ["lua_ls"] = function() end,
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
+    filetypes = { "python" },
   }
 end
 
