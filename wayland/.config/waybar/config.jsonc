@@ -22,8 +22,15 @@
         "power-profiles-daemon",
         "battery",
         "clock",
+        "tray",
         "custom/power"
     ],
+    "tray": {
+      "spacing": 10,
+      "icons": {
+        "blueman": "bluetooth"
+      }
+    },
     "hyprland/workspaces": {
       "format": "{icon}",
       "format-icons": {
