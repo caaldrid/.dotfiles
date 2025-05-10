@@ -55,6 +55,4 @@ M.cheatsheet = {
   theme = "simple",
 }
 
-M.mason = { pkgs = { "delve" } }
-
 return M

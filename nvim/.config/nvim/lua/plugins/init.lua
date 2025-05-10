@@ -66,4 +66,7 @@ return {
       }
     end,
   },
+
+  ---@type NvPluginSpec
+  { import = "configs.dap" },
 }
