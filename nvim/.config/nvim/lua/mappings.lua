@@ -8,12 +8,13 @@ map("i", "jk", "<ESC>")
 map("n", "<C-v>", '<CMD> :execute "normal! \\<C-v>" <cr>', { desc = "Visual Block mode" })
 -- Overwrite defaults from nvchad
 nomap("n", "<leader>fa")
-map(
-  "n",
-  "<leader>ff",
-  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope find files" }
-)
+
+-- Overwrite the Telescope file search
+map("n", "<leader>ff", function()
+  local builtin = require "telescope.builtin"
+  local utils = require "telescope.utils"
+  builtin.find_files { cwd = utils.buffer_dir(), hidden = true }
+end, { desc = "Telescope find files" })
 
 -- Mappings for gitsigns
 map("n", "<leader>gb", "<CMD> Gitsigns blame_line <cr>", { desc = "Git Blame Line" })
