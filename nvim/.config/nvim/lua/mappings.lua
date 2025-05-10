@@ -12,8 +12,7 @@ nomap("n", "<leader>fa")
 -- Overwrite the Telescope file search
 map("n", "<leader>ff", function()
   local builtin = require "telescope.builtin"
-  local utils = require "telescope.utils"
-  builtin.find_files { cwd = utils.buffer_dir(), hidden = true }
+  builtin.find_files { hidden = true }
 end, { desc = "Telescope find files" })
 
 -- Mappings for gitsigns
