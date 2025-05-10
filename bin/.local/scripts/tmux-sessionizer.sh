@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(zoxide query | fzf)
+  selected=$(zoxide query --list --score | awk '$1 >= 20 { print $2 }' | fzf)
 fi
 
 if [[ -z $selected ]]; then
