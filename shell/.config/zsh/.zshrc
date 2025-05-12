@@ -2,6 +2,9 @@
 source "$HOME/.local/scripts/load_brew.sh"
 load_brew
 
+# Setup XDG folders
+source "$HOME/.config/user-dirs.dirs"
+
 # Update Completions
 if type brew &>/dev/null
 then
@@ -46,5 +49,4 @@ source $XDG_CONFIG_HOME/custom/aliases.zsh
 
 # Pull in all my custom keybinds
 source $XDG_CONFIG_HOME/custom/keybinds.zsh
-
 
