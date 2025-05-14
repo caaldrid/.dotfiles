@@ -11,30 +11,27 @@
           "hyprland/window"
     ],
     "modules-center": [
-        "hyprland/workspaces"
+        "cpu",
+        "hyprland/workspaces",
+        "memory"
     ],
     "modules-right": [
         "custom/media",
         "mpd",
         "pulseaudio",
-        "network",
-        "cpu",
-        "memory",
-        "temperature",
         "power-profiles-daemon",
         "battery",
-        "clock",
-        "tray"
+        "tray",
+        "clock"
     ],
     "hyprland/window": {
     "format": "{initialTitle}",
     "separate-outputs": true
 },
     "tray": {
-      "spacing": 10,
-      "icons": {
-        "blueman": "bluetooth"
-      }
+      "icon-size": 14,
+      "spacing": 1,
+      "show-passive-items": true
     },
     "hyprland/workspaces": {
       "format": "{icon}",
@@ -74,23 +71,8 @@
         "tooltip-format-disconnected": "MPD (disconnected)"
     },
     "clock": {
-        "format": "{:%H:%M}  ",
-        "format-alt": "{:%A, %B %d, %Y (%R)}  ",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "calendar": {
-                    "mode"          : "month",
-                    "mode-mon-col"  : 3,
-                    "weeks-pos"     : "right",
-                    "on-scroll"     : 1,
-                    "format": {
-                              "months":     "<span color='#ffead3'><b>{}</b></span>",
-                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-                              }
-                    },
-        "actions":  { "on-click-right": "mode" }
+        "format": "{:%a %B %d %I:%M %p}",
+        "tooltip": false
     },
     "cpu": {
         "format": "{usage}% ",
@@ -98,19 +80,6 @@
     },
     "memory": {
         "format": "{}% "
-    },
-    "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
-    },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {
         "states": {
@@ -132,20 +101,11 @@
       "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
       "tooltip": true,
       "format-icons": {
-        "default": "",
-        "performance": "",
-        "balanced": "",
-        "power-saver": ""
+        "default": "  ",
+        "performance": "  ",
+        "balanced": "  ",
+        "power-saver": "  "
       }
-    },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "   ({signalStrength}%)",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} {essid} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
@@ -179,16 +139,18 @@
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/system": {
-      "format" : "     ",
+      "format" : "  ",
       "tooltip": false,
       "menu": "on-click",
       "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
       "menu-actions": {
         "about": "alacritty --class about --title About --command /home/linuxbrew/.linuxbrew/bin/zsh -c \"fastfetch; read -s -k '?Press enter to exit...'\"",
         "shutdown": "systemctl poweroff",
-        "reboot": "systemctl reboot",
-        "suspend": "systemctl suspend",
-        "hibernate": "systemctl hibernate"
+        "restart": "systemctl reboot",
+        "sleep": "systemctl suspend",
+        "hibernate": "systemctl hibernate",
+        "lock": "pactl set-sink-mute @DEFAULT_SINK@ 1 && hyprlock",
+        "logout": "$HOME/.local/scripts/logout_user.sh"
       }
     }
 }
