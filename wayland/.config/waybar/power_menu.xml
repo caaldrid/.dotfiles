@@ -2,6 +2,11 @@
 <interface>
   <object class="GtkMenu" id="menu">
     <child>
+        <object class="GtkMenuItem" id="about">
+			    <property name="label">About System</property>
+        </object>
+    </child>
+    <child>
 		<object class="GtkMenuItem" id="suspend">
 			<property name="label">Suspend</property>
         </object>
@@ -12,17 +17,17 @@
         </object>
 	</child>
     <child>
-        <object class="GtkMenuItem" id="shutdown">
-			<property name="label">Shutdown</property>
-        </object>
+		<object class="GtkMenuItem" id="reboot">
+			<property name="label">Reboot</property>
+		</object>
     </child>
     <child>
       <object class="GtkSeparatorMenuItem" id="delimiter1"/>
     </child>
     <child>
-		<object class="GtkMenuItem" id="reboot">
-			<property name="label">Reboot</property>
-		</object>
+        <object class="GtkMenuItem" id="shutdown">
+			    <property name="label">Shutdown</property>
+        </object>
     </child>
   </object>
 </interface>

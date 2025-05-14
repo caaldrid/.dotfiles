@@ -7,12 +7,14 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "custom/media"
+          "custom/system",
+          "hyprland/window"
     ],
     "modules-center": [
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/media",
         "mpd",
         "pulseaudio",
         "network",
@@ -22,9 +24,12 @@
         "power-profiles-daemon",
         "battery",
         "clock",
-        "tray",
-        "custom/power"
+        "tray"
     ],
+    "hyprland/window": {
+    "format": "{initialTitle}",
+    "separate-outputs": true
+},
     "tray": {
       "spacing": 10,
       "icons": {
@@ -173,12 +178,13 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
-    "custom/power": {
-      "format" : "  ⏻   ",
+    "custom/system": {
+      "format" : "     ",
       "tooltip": false,
       "menu": "on-click",
       "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
       "menu-actions": {
+        "about": "alacritty --class about --title About --command /home/linuxbrew/.linuxbrew/bin/zsh -c \"fastfetch; read -s -k '?Press enter to exit...'\"",
         "shutdown": "systemctl poweroff",
         "reboot": "systemctl reboot",
         "suspend": "systemctl suspend",
