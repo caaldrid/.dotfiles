@@ -6,6 +6,7 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
+    "reload_style_on_change": true,
     "modules-left": [
           "custom/system",
           "hyprland/window"
@@ -26,7 +27,8 @@
     ],
     "hyprland/window": {
     "format": "{initialTitle}",
-    "separate-outputs": true
+    "separate-outputs": true,
+    "tooltip": false
 },
     "tray": {
       "icon-size": 14,
@@ -94,7 +96,7 @@
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [" ", " ", " ", " ", " "]
     },
     "power-profiles-daemon": {
       "format": "{icon}",
