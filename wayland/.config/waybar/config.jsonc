@@ -43,8 +43,9 @@
       },
       "persistent-workspaces": {
              "eDP-2": [1,2,3,4,5], // 5 workspaces by default on every monitor
-             "DP-1": [6,7,8,9,10]
-       }
+             "DP-1": [6,7,8,9,10],
+             "DP-3": [6,7,8,9,10]
+      }
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
