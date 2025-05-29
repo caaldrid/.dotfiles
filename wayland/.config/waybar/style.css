@@ -41,7 +41,7 @@ window#waybar {
   padding: 0 5px; 
 }
 #cpu {
-  min-width: 40px;
+  min-width: 50px;
 }
 #battery {
    min-width: 50px;
