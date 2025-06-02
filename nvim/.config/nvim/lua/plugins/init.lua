@@ -67,6 +67,19 @@ return {
     end,
   },
 
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "quarto" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ---@module 'render-markdown'
+    config = function()
+      require("render-markdown").setup {
+        render_modes = true,
+        enabled = true,
+      }
+    end,
+  },
+
   ---@type NvPluginSpec
   { import = "configs.dap" },
 }
