@@ -10,7 +10,7 @@ local setup = function(_, opts)
   require("mason").setup(opts)
   require "mason-core.package"
 
-  local lspservers = { "gopls", "lua_ls", "bashls", "pyright" }
+  local lspservers = { "gopls", "lua_ls", "bashls", "pyright", "ts_ls", "eslint" }
   require("mason-lspconfig").setup {
     ensure_installed = lspservers,
   }
@@ -65,6 +65,16 @@ local setup = function(_, opts)
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
     filetypes = { "python" },
+  }
+
+  lspconfig.eslint.setup {
+    ---@diagnostic disable-next-line: unused-local
+    on_attach = function(client, bufnr)
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        command = "EslintFixAll",
+      })
+    end,
   }
 end
 

@@ -33,6 +33,15 @@ return {
         "markdown",
         "markdown_inline",
         "python",
+        "javascript",
+        "typescript",
+        "dockerfile",
+        "gitignore",
+        "html",
+        "css",
+        "yaml",
+        "json",
+        "tsx",
       },
     },
   },
@@ -82,4 +91,7 @@ return {
 
   ---@type NvPluginSpec
   { import = "configs.dap" },
+
+  ---@type NvPluginSpec
+  { import = "configs.typescript-tools" },
 }
