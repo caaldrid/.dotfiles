@@ -9,3 +9,5 @@
 
 /bin/.local/*
 !/bin/.local/scripts
+
+/wayland/.config/hypr/scripts/alttab/*.png
