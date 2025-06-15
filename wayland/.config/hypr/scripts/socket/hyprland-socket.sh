@@ -5,24 +5,33 @@ toggle_float_in_workspace() {
   address=${address//'"'/''}
   workspace=$2
   class=$3
-  if [[ "$workspace" != "special:magic" ]] && [[ "$class" != *"steam"* ]] && [[ "$class" != "firefox" ]]; then
-    window_count=$(hyprctl -j clients | jq '.[] | .workspace | .name ' | grep -c "$workspace")
-    if [[ "$window_count" -eq 1 ]]; then
+  # If we are in the special magic workspace or the window is a steam app or simply firefox, then we ignore it
+  if [[ "$workspace" == "special:magic" ]] || [[ "$class" == *"steam"* ]] || [[ "$class" == "firefox" ]]; then
+    return 0
+  fi
+
+  # If the window has been tagged as custom, then just exit out as it has its own rules
+  tags=$(hyprctl -j clients | jq --arg ADDR "$address" '.[] | select (.address == $ADDR) | .tags | .[]')
+  if [[ ${#tags[*]} -ne 0 && "${tags[*]}" =~ "custom" ]]; then
+    return 0
+  fi
+
+  window_count=$(hyprctl -j clients | jq '.[] | .workspace | .name ' | grep -c "$workspace")
+  if [[ "$window_count" -eq 1 ]]; then
+    CMDS+="dispatch setfloating address:$address;"
+    CMDS+="dispatch resizewindowpixel exact 1488 837,address:$address;"
+    CMDS+="dispatch centerwindow;"
+  else
+    all_open_windows=$(hyprctl -j clients | jq --arg WN "$workspace" '.[] | select (.workspace .name == $WN) | select (.floating) | .address')
+
+    for address in $all_open_windows; do
+      address=${address//'"'/''}
       CMDS+="dispatch togglefloating address:$address;"
-      CMDS+="dispatch resizewindowpixel exact 1488 837,address:$address;"
-      CMDS+="dispatch centerwindow;"
-    else
-      all_open_windows=$(hyprctl -j clients | jq --arg WN "$workspace" '.[] | select (.workspace .name == $WN) | select (.floating) | .address')
+    done
+  fi
 
-      for address in $all_open_windows; do
-        address=${address//'"'/''}
-        CMDS+="dispatch togglefloating address:$address;"
-      done
-    fi
-
-    if [[ -n $CMDS ]]; then
-      hyprctl -q --batch "$CMDS"
-    fi
+  if [[ -n $CMDS ]]; then
+    hyprctl -q --batch "$CMDS"
   fi
 }
 
