@@ -5,7 +5,7 @@ toggle_float_in_workspace() {
   address=${address//'"'/''}
   workspace=$2
   class=$3
-  classes_ignor=("firefox" "alt.tab" "Calendar Reminders" "clipse" "about")
+  classes_ignor=("firefox" "alt.tab" "Calendar Reminders" "clipse.board" "about")
   # If we are in the special magic workspace or the window is a steam app or simply firefox, then we ignore it
   if [[ "$workspace" == "special:magic" ]] || [[ "$class" == *"steam"* ]] || [[ $(echo "${classes_ignor[*]}" | grep -c "$class") -ne 0 ]]; then
     return 0
