@@ -5,14 +5,9 @@ toggle_float_in_workspace() {
   address=${address//'"'/''}
   workspace=$2
   class=$3
+  classes_ignor=("firefox" "alt.tab" "Calendar Reminders" "clipse" "about")
   # If we are in the special magic workspace or the window is a steam app or simply firefox, then we ignore it
-  if [[ "$workspace" == "special:magic" ]] || [[ "$class" == *"steam"* ]] || [[ "$class" == "firefox" ]]; then
-    return 0
-  fi
-
-  # If the window has been tagged as custom, then just exit out as it has its own rules
-  tags=$(hyprctl -j clients | jq --arg ADDR "$address" '.[] | select (.address == $ADDR) | .tags | .[]')
-  if [[ ${#tags[*]} -ne 0 && "${tags[*]}" =~ "custom" ]]; then
+  if [[ "$workspace" == "special:magic" ]] || [[ "$class" == *"steam"* ]] || [[ $(echo "${classes_ignor[*]}" | grep -c "$class") -ne 0 ]]; then
     return 0
   fi
 
