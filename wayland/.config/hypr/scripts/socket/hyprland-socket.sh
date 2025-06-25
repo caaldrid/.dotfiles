@@ -57,7 +57,7 @@ handle() {
   case $action in
   monitoraddedv2) monitor_added "${SOCKET_DATA[@]}" ;;
   monitorremovedv2) monitor_removed "${SOCKET_DATA[@]}" ;;
-  configreloaded) load ;;
+  configreloaded) load && pkill waybar && hyprctl dispatch exec uwsm app -- waybar ;;
   esac
 }
 
