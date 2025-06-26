@@ -34,6 +34,15 @@ window#waybar {
 #workspaces button.urgent {
     background-color: #eb4d4b;
 }
+
+#custom-media {
+  padding: 3px;
+}
+
+#pulseaudio {
+  padding-right: 5px;
+}
+
 #clock {
   padding-right: 8px
 }
