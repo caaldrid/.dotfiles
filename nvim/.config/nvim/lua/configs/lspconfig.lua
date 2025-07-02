@@ -1,20 +1,8 @@
--- load defaults i.e lua_lsp
-require("nvchad.configs.lspconfig").defaults()
-
-local nvlsp = require "nvchad.configs.lspconfig"
-
-local lspconfig = require "lspconfig"
-local util = require "lspconfig/util"
-
 local setup = function(_, opts)
   require("mason").setup(opts)
   require "mason-core.package"
 
-  local lspservers = { "gopls", "lua_ls", "bashls", "pyright", "ts_ls", "eslint" }
-  require("mason-lspconfig").setup {
-    ensure_installed = lspservers,
-  }
-
+  local nvlsp = require "nvchad.configs.lspconfig"
   -- Make sure lsp picks up newly added files
   nvlsp.capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
@@ -22,41 +10,17 @@ local setup = function(_, opts)
   -- And servers you install through mason UI
   -- So defining servers in the list above is optional
   require("mason-lspconfig").setup {
-    -- Default setup for all servers, unless a custom one is defined below
-    function(server_name)
-      lspconfig[server_name].setup {
-        on_attach = function(client, bufnr)
-          nvlsp.on_attach(client, bufnr)
-          -- Add your other things here
-          -- Example being format on save or something
-        end,
-        capabilities = nvlsp.capabilities,
-        on_init = nvlsp.on_init,
-      }
-    end,
+    ensure_installed = { "gopls", "lua_ls", "bashls", "pyright", "ts_ls", "eslint" },
   }
+
   -- configuring gopls lsp
-  lspconfig.gopls.setup {
-    cmd = { "gopls" },
+  vim.lsp.config("gopls", {
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-    filetypes = { "go", "gomod", "gowork", "gotmpl" },
-    root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-    settings = {
-      gopls = {
-        completeUnimported = true,
-        usePlaceholders = true,
-        analyses = {
-          unusedparams = true,
-          deprecated = true,
-        },
-        staticcheck = true,
-      },
-    },
-  }
+  })
 
-  lspconfig.pyright.setup {
+  vim.lsp.config("pyright", {
     on_attach = nvlsp.on_attach,
     before_init = function(_, config)
       local get_python_path = require "helpers.python-path"
@@ -64,18 +28,20 @@ local setup = function(_, opts)
     end,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-    filetypes = { "python" },
-  }
+  })
 
-  lspconfig.eslint.setup {
+  vim.lsp.config("eslint", {
     ---@diagnostic disable-next-line: unused-local
     on_attach = function(client, bufnr)
+      nvlsp.on_attach(client, bufnr)
       vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
         command = "EslintFixAll",
       })
     end,
-  }
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
+  })
 end
 
 ---@type NvPluginSpec
