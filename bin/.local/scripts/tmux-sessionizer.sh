@@ -25,4 +25,4 @@ if ! tmux has-session -t="$selected_name" 2>/dev/null; then
   tmux new-session -ds "$selected_name" -c "$selected"
 fi
 
-tmux attach-session -t "$selected_name"
+hyprctl dispatch exec "uwsm app -- ghostty --title='Code' --class='nvim.code' --command='source $HOME/.local/scripts/load_brew.sh && load_brew && tmux attach-session -t $selected_name'"
