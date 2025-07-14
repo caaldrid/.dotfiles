@@ -41,7 +41,9 @@
         "default": ""
       },
       "persistent-workspaces": {
-             "*": [1,2,3,4,5] // 5 workspaces by default on every monitor
+        "eDP-2": [1,2,3,4,5],
+        "DP-1": [6,7,8,9,10],
+        "DP-3": [6,7,8,9,10]
       }
     },
     "clock": {
