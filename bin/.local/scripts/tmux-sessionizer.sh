@@ -16,13 +16,11 @@ fi
 selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -s "$selected_name" -c "$selected"
-  exit 0
+tmux_cmd="tmux attach-session -t $selected_name"
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then # If we aren't in a tmux session and if there is no running tmux process
+  tmux_cmd="tmux new-session -s $selected_name -c $selected"
+elif ! tmux has-session -t="$selected_name" 2>/dev/null; then # If there isn't already a tmux session with that name
+  tmux_cmd="tmux new-session -ds $selected_name -c $selected"
 fi
 
-if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-  tmux new-session -ds "$selected_name" -c "$selected"
-fi
-
-hyprctl dispatch exec "uwsm app -- ghostty --title='Code' --class='nvim.code' --command='source $HOME/.local/scripts/load_brew.sh && load_brew && tmux attach-session -t $selected_name'"
+hyprctl dispatch exec "uwsm app -- ghostty --title='Code' --class='nvim.code' --command='source $HOME/.local/scripts/load_brew.sh && load_brew && $tmux_cmd'"
