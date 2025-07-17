@@ -1,0 +1,6 @@
+allow_images=true
+normal_window=true 
+insensitive=true
+term=ghostty
+prompt=
+drun-print_desktop_file=true
