@@ -30,13 +30,17 @@ local setup = function(_, opts)
     capabilities = nvlsp.capabilities,
   })
 
+  local base_on_attach = vim.lsp.config.eslint.on_attach
   vim.lsp.config("eslint", {
-    ---@diagnostic disable-next-line: unused-local
     on_attach = function(client, bufnr)
-      nvlsp.on_attach(client, bufnr)
+      if not base_on_attach then
+        return
+      end
+
+      base_on_attach(client, bufnr)
       vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
-        command = "EslintFixAll",
+        command = "LspEslintFixAll",
       })
     end,
     on_init = nvlsp.on_init,
