@@ -19,7 +19,7 @@ tmux_running=$(pgrep tmux)
 # If there is no running tmux session then create a detached session and lunch a new window with the right code tag and attach to the session
 if [ -z "$tmux_running" ]; then
   tmux new-session -ds "$selected_name" -c "$selected"
-  hyprctl dispatch exec "uwsm app -- ghostty --title='Code' --class='nvim.code'  --command='source $HOME/.local/scripts/load_brew.sh && load_brew && tmux attach-session -t $selected_name'"
+  tmux attach-session -t "$selected_name"
   exit 0
 fi
 
