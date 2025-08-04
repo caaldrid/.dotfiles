@@ -16,7 +16,8 @@ os_name=$(uname -s)
   else
     compinit
   fi
-
+  #allow tab completion in the middle of a word
+  setopt COMPLETE_IN_WORD
 fi
 
 # Initialize atuin
