@@ -94,7 +94,7 @@ return {
     },
   },
 
-  { import = "configs.gitsigns" },
+  { "lewis6991/gitsigns.nvim" },
 
   { import = "configs.git-fugitive" },
 
@@ -126,4 +126,5 @@ return {
       vim.cmd [[colorscheme one_monokai]]
     end,
   },
+  { import = "configs.neotest" },
 }
