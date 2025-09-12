@@ -1,15 +1,26 @@
-require "nvchad.mappings"
-
 local map = vim.keymap.set
 local nomap = vim.keymap.del
 
+-- General Mappings
+map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
+map({ "n", "x" }, "<leader>fm", function()
+  require("conform").format { lsp_fallback = true }
+end, { desc = "general format file" })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map("n", "<C-v>", '<CMD> :execute "normal! \\<C-v>" <cr>', { desc = "Visual Block mode" })
--- Overwrite defaults from nvchad
-nomap("n", "<leader>fa")
 
--- Overwrite the Telescope file search
+-- telescope
+map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
+map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
+map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
+map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
+map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
+map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
+map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>ff", function()
   local builtin = require "telescope.builtin"
   builtin.find_files { hidden = true }
@@ -77,3 +88,17 @@ end, { desc = "Debug go test" })
 map("n", "<leader>dgl", function()
   require("dap-go").debug_last_test()
 end, { desc = "Debug last go test" })
+
+-- whichkey
+map("n", "<leader>wk", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
+
+-- global lsp mappings
+map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
+
+-- Comment
+map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+
+-- nvimtree
+map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
+map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })

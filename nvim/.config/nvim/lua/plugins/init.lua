@@ -1,24 +1,62 @@
 return {
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show { global = false }
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+  },
+
   -- Set up LSP stuff
-  ---@type NvPluginSpec
   { import = "configs.lspconfig" },
 
-  ---@type NvPluginSpec
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
-
-  ---@type NvPluginSpec
+  { "nvim-tree/nvim-web-devicons", opts = {} },
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
-      filters = { dotfiles = false, custom = { "^\\.git$" } },
+      filters = { custom = { "^\\.git$", "__pycache__", "\\.pyc$" } },
+      renderer = {
+        highlight_git = "icon",
+        icons = {
+          git_placement = "signcolumn",
+          show = {
+            file = true,
+            folder = true,
+            folder_arrow = true,
+            git = true,
+          },
+          glyphs = {
+            default = "",
+            folder = { default = "", open = "" },
+            git = { unstaged = "✗", staged = "✓", unmerged = "", renamed = "➜", untracked = "★" },
+          },
+        },
+      },
+      git = { enable = true, show_on_dirs = true, show_on_open_dirs = true },
+      view = {
+        adaptive_size = true,
+        side = "left",
+        preserve_window_proportions = true,
+      },
     },
   },
 
-  ---@type NvPluginSpec
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
@@ -46,21 +84,10 @@ return {
     },
   },
 
-  ---@type NvPluginSpec
   { import = "configs.gitsigns" },
 
-  ---@type NvPluginSpec
   { import = "configs.git-fugitive" },
 
-  ---@type NvPluginSpec
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
-  },
-
-  ---@type NvPluginSpec
   {
     "nvim-telescope/telescope.nvim",
     config = function()
@@ -76,22 +103,17 @@ return {
     end,
   },
 
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "quarto" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ---@module 'render-markdown'
-    config = function()
-      require("render-markdown").setup {
-        render_modes = true,
-        enabled = true,
-      }
-    end,
-  },
-
-  ---@type NvPluginSpec
   { import = "configs.dap" },
 
-  ---@type NvPluginSpec
   { import = "configs.typescript-tools" },
+  { import = "configs.blink-completion" },
+  {
+    "cpea2506/one_monokai.nvim",
+    config = function(_, opts)
+      require("one_monokai").setup {
+        transparent = true,
+      } -- calling setup is optional
+      vim.cmd [[colorscheme one_monokai]]
+    end,
+  },
 }

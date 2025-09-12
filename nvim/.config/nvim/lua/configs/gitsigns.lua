@@ -1,5 +1,3 @@
-dofile(vim.g.base46_cache .. "git")
-
 local setup = function(_, _)
   require("gitsigns").setup {
     signs = {
@@ -18,7 +16,6 @@ local setup = function(_, _)
   }
 end
 
----@type NvPluginSpec
 local spec = {
   "lewis6991/gitsigns.nvim",
   event = "User FilePost",

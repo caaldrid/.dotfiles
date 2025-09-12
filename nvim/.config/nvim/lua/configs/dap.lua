@@ -1,5 +1,4 @@
 local specs = {
-  ---@type NvPluginSpec
   {
     "mfussenegger/nvim-dap",
     event = "VeryLazy",
@@ -10,14 +9,12 @@ local specs = {
       "theHamsta/nvim-dap-virtual-text",
     },
   },
-  ---@type NvPluginSpec
   {
     "theHamsta/nvim-dap-virtual-text",
     config = function()
       require("nvim-dap-virtual-text").setup()
     end,
   },
-  ---@type NvPluginSpec
   {
     "jay-babu/mason-nvim-dap.nvim",
     config = function()
@@ -32,7 +29,6 @@ local specs = {
       }
     end,
   },
-  ---@type NvPluginSpec
   {
     "leoluz/nvim-dap-go",
     ft = "go",
@@ -46,7 +42,6 @@ local specs = {
       }
     end,
   },
-  ---@type NvPluginSpec
   {
     "mfussenegger/nvim-dap-python",
     ft = "python",
@@ -55,7 +50,6 @@ local specs = {
       require("dap-python").setup(get_python_path(vim.fn.getcwd()))
     end,
   },
-  ---@type NvPluginSpec
   {
     "rcarriga/nvim-dap-ui",
     ft = { "go", "python" },
