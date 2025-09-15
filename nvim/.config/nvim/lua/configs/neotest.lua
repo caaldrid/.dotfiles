@@ -23,7 +23,6 @@ local spec = {
           if string.len(result) ~= 0 then
             return "pytest"
           else
-            print "unittest"
             return "unittest"
           end
         end
