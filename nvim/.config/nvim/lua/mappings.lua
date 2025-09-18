@@ -116,7 +116,9 @@ map("n", "<leader>tr", function()
   nt.output_panel.open()
   nt.run.run(vim.fn.expand "%")
 end, { desc = "Test Run File" })
-
 map("n", "<leader>td", function()
   require("neotest").run.run { vim.fn.expand "%", strategy = "dap" }
 end, { desc = "Test Run in Debug" })
+map("n", "<leader>tw", function()
+  require("neotest").watch.watch()
+end, { desc = "Test Watch" })
