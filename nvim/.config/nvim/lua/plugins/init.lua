@@ -67,32 +67,7 @@ return {
     },
   },
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "c_sharp",
-        "go",
-        "gomod",
-        "bash",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "javascript",
-        "typescript",
-        "dockerfile",
-        "gitignore",
-        "html",
-        "css",
-        "yaml",
-        "json",
-        "tsx",
-      },
-    },
-  },
+  { import = "configs.treesitter" },
 
   { "lewis6991/gitsigns.nvim" },
 
