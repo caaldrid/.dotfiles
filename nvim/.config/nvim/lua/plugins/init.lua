@@ -1,5 +1,32 @@
 return {
   {
+    "neanias/everforest-nvim",
+    config = function()
+      require("lazy").setup {
+        "neanias/everforest-nvim",
+        version = false,
+        lazy = false,
+        priority = 1000, -- make sure to load this before all the other start plugins
+        -- Optional; default configuration will be used if setup isn't called.
+        config = function()
+          local everforest = require "everforest"
+          everforest.setup {
+            background = "hard",
+            transparent_background_level = 0,
+            italics = true,
+            disable_italic_comments = false,
+            inlay_hints_background = "dimmed",
+            on_highlights = function(hl, palette)
+              hl["@string.special.symbol.ruby"] = { link = "@field" }
+              hl["DiagnosticUnderlineWarn"] = { undercurl = true, sp = palette.yellow }
+            end,
+          }
+          everforest.load()
+        end,
+      }
+    end,
+  },
+  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
@@ -97,18 +124,10 @@ return {
   },
 
   { import = "configs.dap" },
-
   { import = "configs.typescript-tools" },
   { import = "configs.blink-completion" },
-  {
-    "cpea2506/one_monokai.nvim",
-    config = function(_, opts)
-      require("one_monokai").setup {
-        transparent = true,
-      } -- calling setup is optional
-      vim.cmd [[colorscheme one_monokai]]
-    end,
-  },
   { import = "configs.neotest" },
   { import = "configs.opencode" },
+  { import = "configs.tabby" },
+  { import = "configs.lualine" },
 }

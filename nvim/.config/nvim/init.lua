@@ -44,7 +44,7 @@ else
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "habamax" } },
+    install = { colorscheme = { "everforest" } },
     -- automatically check for plugin updates
     checker = { enabled = true },
 
@@ -83,6 +83,7 @@ else
     },
   }
 
+  vim.cmd [[colorscheme everforest]]
   require "autocmd"
   require "mappings"
 end

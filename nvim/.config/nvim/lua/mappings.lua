@@ -1,5 +1,4 @@
 local map = vim.keymap.set
-local nomap = vim.keymap.del
 
 -- General Mappings
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
@@ -151,3 +150,68 @@ end, { desc = "Opencode Messages half page up" })
 map("n", "<S-C-d>", function()
   require("opencode").command "messages_half_page_down"
 end, { desc = "Messages half page down" })
+
+--Tabby
+map("n", "<leader>mtl", function()
+  local tabpages = vim.api.nvim_list_tabpages()
+  if #tabpages < 2 then
+    vim.notify("Only one tab is open — nothing to move.", vim.log.levels.WARN)
+    return
+  end
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+    vim.notify("Invalid buffer number.", vim.log.levels.ERROR)
+    return
+  end
+
+  local tabnr = vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+  if tabnr < 1 then
+    vim.notify("This is the left most tab.", vim.log.levels.WARN)
+    return
+  end
+
+  -- Go to destination tab
+  vim.cmd("tabnext " .. tabnr - 1)
+  -- Open the buffer as a vertical split
+  vim.cmd("botright vert sbuffer " .. bufnr)
+
+  -- Return to the source tab
+  vim.cmd("tabnext " .. tabnr)
+  vim.cmd "close"
+
+  -- Go to destination tab
+  vim.cmd("tabnext " .. tabnr - 1)
+end, { desc = "Tab Move buffer to left tab" })
+
+map("n", "<leader>mtr", function()
+  local tabpages = vim.api.nvim_list_tabpages()
+  if #tabpages < 2 then
+    vim.notify("Only one tab is open — nothing to move.", vim.log.levels.WARN)
+    return
+  end
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+    vim.notify("Invalid buffer number.", vim.log.levels.ERROR)
+    return
+  end
+
+  local tabnr = vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage())
+  if tabnr == #tabpages then
+    vim.notify("This is the right most tab.", vim.log.levels.WARN)
+    return
+  end
+
+  -- Go to destination tab
+  vim.cmd("tabnext " .. tabnr + 1)
+  -- Open the buffer as a vertical split
+  vim.cmd("botright vert sbuffer " .. bufnr)
+
+  -- Return to the source tab
+  vim.cmd("tabnext " .. tabnr)
+  vim.cmd "close"
+
+  -- Go to destination tab
+  vim.cmd("tabnext " .. tabnr + 1)
+end, { desc = "Tab Move buffer to right tab" })
