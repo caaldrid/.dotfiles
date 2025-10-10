@@ -27,6 +27,7 @@ local spec = {
           end
         end
       end,
+      pytest_discover_instances = true,
     }
     local neotest_golang_opts = {}
 
