@@ -122,3 +122,32 @@ end, { desc = "Test Run in Debug" })
 map("n", "<leader>tw", function()
   require("neotest").watch.watch()
 end, { desc = "Test Watch" })
+
+--Opencode
+map({ "n", "x" }, "<leader>oa", function()
+  require("opencode").ask("@this: ", { submit = true })
+end, { desc = "Opencode Ask about this" })
+map({ "n", "x" }, "<leader>o+", function()
+  require("opencode").prompt "@this"
+end, { desc = "Opencode Add this" })
+map({ "n", "x" }, "<leader>os", function()
+  require("opencode").select()
+end, { desc = "Opencode Select prompt" })
+map("n", "<leader>ot", function()
+  require("opencode").toggle()
+end, { desc = "Opencode Toggle embedded" })
+map("n", "<leader>on", function()
+  require("opencode").command "session_new"
+end, { desc = "Opencode New session" })
+map("n", "<leader>oi", function()
+  require("opencode").command "session_interrupt"
+end, { desc = "Opencode Interrupt session" })
+map("n", "<leader>oA", function()
+  require("opencode").command "agent_cycle"
+end, { desc = "Opencode Cycle selected agent" })
+map("n", "<S-C-u>", function()
+  require("opencode").command "messages_half_page_up"
+end, { desc = "Opencode Messages half page up" })
+map("n", "<S-C-d>", function()
+  require("opencode").command "messages_half_page_down"
+end, { desc = "Messages half page down" })

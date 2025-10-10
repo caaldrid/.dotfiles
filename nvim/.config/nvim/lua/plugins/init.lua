@@ -102,4 +102,5 @@ return {
     end,
   },
   { import = "configs.neotest" },
+  { import = "configs.opencode" },
 }
