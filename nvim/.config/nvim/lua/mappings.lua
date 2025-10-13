@@ -38,56 +38,31 @@ map("n", "<leader>gp", "<CMD> G push <cr>", { desc = "Git Push" })
 map("n", "<leader>gc", "<CMD> G commit <cr>", { desc = "Git Commit" })
 
 -- Mappings for Dap
-map("n", "<leader>dt", function()
+map("n", "<F9>", function()
   require("dap").toggle_breakpoint()
 end, { desc = "Debug Toggle Breakpoint" })
 
-map("n", "<leader>dc", function()
+map("n", "<F5>", function()
   require("dap").continue()
 end, { desc = "Debug Continue" })
 
-map("n", "<leader>di", function()
+map("n", "<F11>", function()
   require("dap").step_into()
 end, { desc = "Debug Step Into" })
 
-map("n", "<leader>do", function()
+map("n", "<F10>", function()
   require("dap").step_over()
 end, { desc = "Debug Step Over" })
 
-map("n", "<leader>du", function()
+map("n", "<S-F11>", function()
   require("dap").step_out()
 end, { desc = "Debug Step Out" })
 
-map("n", "<leader>dr", function()
-  require("dap").repl.open()
-end, { desc = "Debug Open REPL" })
-
-map("n", "<leader>dl", function()
-  require("dap").run_last()
-end, { desc = "Debug Run Last" })
-
-map("n", "<leader>dq", function()
+map("n", "<S-F5>", function()
   require("dap").terminate()
   require("dapui").close()
   require("nvim-dap-virtual-text").toggle()
 end, { desc = "Debug Terminate" })
-
-map("n", "<leader>db", function()
-  require("dap").list_breakpoints()
-end, { desc = "Debug List Breakpoints" })
-
-map("n", "<leader>de", function()
-  require("dap").set_exception_breakpoints { "all" }
-end, { desc = "Debug Set Exception Breakpoints" })
-
--- Mappings for dap-go
--- map("n", "<leader>dgt", function()
---   require("dap-go").debug_test()
--- end, { desc = "Debug go test" })
---
--- map("n", "<leader>dgl", function()
---   require("dap-go").debug_last_test()
--- end, { desc = "Debug last go test" })
 
 -- whichkey
 map("n", "<leader>wk", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
