@@ -54,11 +54,11 @@ map("n", "<F10>", function()
   require("dap").step_over()
 end, { desc = "Debug Step Over" })
 
-map("n", "<S-F11>", function()
+map("n", "<F23>", function()
   require("dap").step_out()
 end, { desc = "Debug Step Out" })
 
-map("n", "<S-F5>", function()
+map("n", "<F17>", function()
   require("dap").terminate()
   require("dapui").close()
   require("nvim-dap-virtual-text").toggle()
