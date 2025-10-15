@@ -91,7 +91,18 @@ map("n", "<leader>tr", function()
   nt.run.run(vim.fn.expand "%")
 end, { desc = "Test Run File" })
 map("n", "<leader>td", function()
-  require("neotest").run.run { vim.fn.expand "%", strategy = "dap" }
+  local neotest = require "neotest"
+  local ft = vim.bo.filetype
+  local testfile = vim.fn.expand "%"
+  print(ft)
+  if ft == "python" then
+    testfile = string.format("%s_test.py", vim.fn.expand "%:r")
+  end
+  if ft == "go" then
+    testfile = string.format("%s_test.go", vim.fn.expand "%:r")
+  end
+
+  neotest.run.run { testfile, strategy = "dap", suite = true }
 end, { desc = "Test Run in Debug" })
 map("n", "<leader>tw", function()
   require("neotest").watch.watch()
