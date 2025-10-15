@@ -4,6 +4,7 @@ local o = vim.o
 o.relativenumber = true
 o.showtabline = 2
 o.background = "dark"
+o.autoread = true
 
 -- Hide the end of buffer lines that were showing a tilda character before
 vim.wo.fillchars = "eob: "
