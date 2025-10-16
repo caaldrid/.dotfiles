@@ -86,15 +86,22 @@ map("n", "<leader>to", function()
   require("neotest").output_panel.toggle()
 end, { desc = "Test Open Output" })
 map("n", "<leader>tr", function()
-  local nt = require "neotest"
-  nt.output_panel.open()
-  nt.run.run(vim.fn.expand "%")
+  local neotest = require "neotest"
+  local ft = vim.bo.filetype
+  local testfile = vim.fn.expand "%"
+  if ft == "python" then
+    testfile = string.format("%s_test.py", vim.fn.expand "%:r")
+  end
+  if ft == "go" then
+    testfile = string.format("%s_test.go", vim.fn.expand "%:r")
+  end
+
+  neotest.run.run { testfile, strategy = "dap", suite = true }
 end, { desc = "Test Run File" })
 map("n", "<leader>td", function()
   local neotest = require "neotest"
   local ft = vim.bo.filetype
   local testfile = vim.fn.expand "%"
-  print(ft)
   if ft == "python" then
     testfile = string.format("%s_test.py", vim.fn.expand "%:r")
   end
