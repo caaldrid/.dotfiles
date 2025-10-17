@@ -1,29 +1,24 @@
 return {
   {
     "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      require("lazy").setup {
-        "neanias/everforest-nvim",
-        version = false,
-        lazy = false,
-        priority = 1000, -- make sure to load this before all the other start plugins
-        -- Optional; default configuration will be used if setup isn't called.
-        config = function()
-          local everforest = require "everforest"
-          everforest.setup {
-            background = "hard",
-            transparent_background_level = 0,
-            italics = true,
-            disable_italic_comments = false,
-            inlay_hints_background = "dimmed",
-            on_highlights = function(hl, palette)
-              hl["@string.special.symbol.ruby"] = { link = "@field" }
-              hl["DiagnosticUnderlineWarn"] = { undercurl = true, sp = palette.yellow }
-            end,
-          }
-          everforest.load()
+      -- Optional; default configuration will be used if setup isn't called.
+      local everforest = require "everforest"
+      everforest.setup {
+        background = "hard",
+        transparent_background_level = 0,
+        italics = true,
+        disable_italic_comments = false,
+        inlay_hints_background = "dimmed",
+        on_highlights = function(hl, palette)
+          hl["@string.special.symbol.ruby"] = { link = "@field" }
+          hl["DiagnosticUnderlineWarn"] = { undercurl = true, sp = palette.yellow }
         end,
       }
+      everforest.load()
     end,
   },
   {
@@ -56,13 +51,11 @@ return {
     },
   },
   -- Set up LSP stuff
-  { import = "configs.lspconfig" },
-
   {
-    "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
-    opts = require "configs.conform",
+    import = "configs.lspconfig",
   },
+  { import = "configs.conform" },
+
   { "nvim-tree/nvim-web-devicons", opts = {} },
   {
     "nvim-tree/nvim-tree.lua",
