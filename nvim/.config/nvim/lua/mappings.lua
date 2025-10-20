@@ -96,7 +96,7 @@ map("n", "<leader>tr", function()
     testfile = string.format("%s_test.go", vim.fn.expand "%:r")
   end
 
-  neotest.run.run { testfile, strategy = "dap", suite = true }
+  neotest.run.run { testfile, strategy = "integrated", suite = true }
 end, { desc = "Test Run File" })
 map("n", "<leader>td", function()
   local neotest = require "neotest"
