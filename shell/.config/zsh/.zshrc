@@ -36,9 +36,6 @@ export LS_COLORS="$(vivid generate molokai)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
 
-# Enable Docker Socket
-export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
-
 # Pull in all my custom functions
 source $XDG_CONFIG_HOME/custom/functions.zsh
 
