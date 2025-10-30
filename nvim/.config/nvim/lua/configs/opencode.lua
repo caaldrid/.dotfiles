@@ -4,7 +4,7 @@ local specs = {
     dependencies = {
       -- Recommended for `ask()` and `select()`.
       -- Required for `toggle()`.
-      { "folke/snacks.nvim", opts = { input = {}, picker = {} } },
+      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
     },
     config = function()
       vim.g.opencode_opts = {
