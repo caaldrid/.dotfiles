@@ -20,6 +20,8 @@ os_name=$(uname -s)
   setopt COMPLETE_IN_WORD
 fi
 
+export EDITOR=nvim
+
 # Initialize atuin
 eval "$(atuin init zsh)"
 
