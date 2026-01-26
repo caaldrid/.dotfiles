@@ -7,9 +7,9 @@
 	editor = vim
 [credential "https://github.com"]
 	helper = 
-	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+	helper = "!f() { if [ \"$(uname -s)\" = Linux ]; then /home/linuxbrew/.linuxbrew/bin/gh auth git-credential \"$@\"; else /opt/homebrew/bin/gh auth git-credential \"$@\"; fi; };f"
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+	helper = "!f() { if [ \"$(uname -s)\" = Linux ]; then /home/linuxbrew/.linuxbrew/bin/gh auth git-credential \"$@\"; else /opt/homebrew/bin/gh auth git-credential \"$@\"; fi; };f"
 [push]
 	autoSetupRemote = true
