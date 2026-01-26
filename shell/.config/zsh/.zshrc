@@ -2,14 +2,16 @@
 source "$HOME/.local/scripts/load_brew.sh"
 load_brew
 
-# Setup XDG folders
-source "$HOME/.config/user-dirs.dirs"
+os_name=$(uname -s)
+if [[ "$os_name" != "Darwin" ]]; then
+	# Setup XDG folders
+	source "$HOME/.config/user-dirs.dirs"
+fi
 
 # Update Completions
 if type brew &>/dev/null
 then
   FPATH="$(brew --prefix)/share/zsh/site-functions:$(brew --prefix)/Cellar/fzf/0.54.3/shell/completion.zsh:${FPATH}"
-os_name=$(uname -s)
   autoload -Uz compinit
   if [[ "$os_name" == "Darwin" ]]; then
     compinit -u
