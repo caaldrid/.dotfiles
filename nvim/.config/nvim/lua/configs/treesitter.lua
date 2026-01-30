@@ -4,7 +4,7 @@ local spec = {
   branch = "main",
   build = ":TSUpdate",
   config = function()
-    ts = require "nvim-treesitter"
+    local ts = require "nvim-treesitter"
     ts.install({
       "vim",
       "lua",
