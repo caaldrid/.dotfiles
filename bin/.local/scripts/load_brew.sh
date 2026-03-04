@@ -5,9 +5,10 @@ load_brew() {
 
     os_name=$(uname -s)
     if [[ "$os_name" == "Darwin" ]]; then
-        brewser=$(stat -f "%Su" $(which brew))
+        brewser=$(stat -f "%Su" "$(which brew)")
         unalias brew 2>/dev/null
         brew='sudo -Hu '$brewser' brew'
+        # shellcheck disable=SC2139,SC2086  # intentional: alias expands $brew at define time
         alias brew=$brew
     fi
 }

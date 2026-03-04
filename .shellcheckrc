@@ -1,0 +1,5 @@
+# SC1090/SC1091: Don't follow dynamically constructed sources.
+# This repo sources scripts from computed paths and the web (ini-file-parser),
+# so static analysis of sourced files is not feasible.
+disable=SC1090
+disable=SC1091
