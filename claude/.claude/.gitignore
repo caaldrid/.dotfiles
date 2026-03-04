@@ -1,0 +1,19 @@
+# Secrets
+.credentials.json
+
+# Generated / machine-local
+backups/
+cache/
+debug/
+file-history/
+history.jsonl
+paste-cache/
+projects/
+session-env/
+shell-snapshots/
+telemetry/
+temp/
+memory/
+
+# Plugin state (machine-local, managed by Claude Code)
+plugins/
