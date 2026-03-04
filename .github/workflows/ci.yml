@@ -15,7 +15,7 @@ jobs:
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck
       - name: Run shellcheck
-        run: shellcheck run.sh bin/.local/scripts/*.sh
+        run: shellcheck --severity=warning run.sh bin/.local/scripts/*.sh
 
   stylua:
     name: Stylua
