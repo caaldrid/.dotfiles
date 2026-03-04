@@ -59,8 +59,8 @@ setup_panes() {
   # Run claude in top right pane
   tmux send-keys -t "${session}.1" "claude" Enter
 
-  # Run nvim in left pane
-  tmux send-keys -t "${session}.0" "nvim ." Enter
+  # Run nvim in left pane as a server so Claude Code hooks can refresh buffers
+  tmux send-keys -t "${session}.0" "nvim --listen /tmp/nvim-${session}.sock ." Enter
 
   # Focus left pane
   tmux select-pane -t "${session}.0"
