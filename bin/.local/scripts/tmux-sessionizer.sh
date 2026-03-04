@@ -13,7 +13,29 @@ else
   if [[ -d "$HOME/Code/github.com" ]]; then
     while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
   fi
-  selected=$(printf '%s\n' "${dirs[@]}" | sort -u | fzf --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
+  fzf_out=$(printf '%s\n' "${dirs[@]}" | sort -u | fzf --print-query --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
+  fzf_exit=$?
+  query=$(awk 'NR==1' <<< "$fzf_out")
+  selected=$(awk 'NR==2' <<< "$fzf_out")
+
+  # User aborted (Esc)
+  if [[ $fzf_exit -eq 130 ]]; then
+    exit 0
+  fi
+
+  # No existing dir selected but user typed a name — create a new GitHub repo
+  if [[ -z $selected && -n $query ]]; then
+    gh_user=$(gh api user --jq '.login' 2>/dev/null)
+    if [[ -z $gh_user ]]; then
+      echo "tmux-sessionizer: gh not authenticated, cannot create repo" >&2
+      exit 1
+    fi
+    new_dir="$HOME/Code/github.com/$gh_user/$query"
+    mkdir -p "$HOME/Code/github.com/$gh_user"
+    gh repo create "$query" --private || exit 1
+    git clone "https://github.com/$gh_user/$query.git" "$new_dir" || exit 1
+    selected="$new_dir"
+  fi
 fi
 
 if [[ -z $selected ]]; then
