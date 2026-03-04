@@ -250,7 +250,7 @@ Stored in `shell/.gitconfig` → symlinked to `~/.gitconfig`.
 
 When running as an AI agent (Claude Code on the web), `gh` is not authenticated, so the PR workflow is split:
 
-- The AI pushes changes to a `claude/<description>` branch
+- The AI pushes changes to a `claude/<description>-<sessionId>` branch — the name **must** start with `claude/` and end with the session ID or the push will fail with HTTP 403
 - **You** create, review, and merge the PR via GitHub or your local `gh` CLI
 - After merging, you delete the branch and tell the AI to pull latest `main`
 
