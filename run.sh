@@ -57,7 +57,8 @@ if [ "$OPT_S" = false ] && [ "$OPT_C" = false ]; then
   pushd "$HOME" || exit
 
   # Iterate through the pkgs config section to install programs
-  for pkg_installer in ${pkgs_keys[@]}; do
+  # shellcheck disable=SC2154  # pkgs_keys is populated by process_ini_file
+  for pkg_installer in "${pkgs_keys[@]}"; do
     install_cmd=$(get_value "installer_cmd" "$pkg_installer")
 
     # Make sure to user brewuser on mac
@@ -100,7 +101,7 @@ fi
 printf "\n---------- SETTING UP CONFIGS  ----------"
 # Throw an error if stow is not installed
 command=stow
-if ! which $command >/dev/null 2>&1; then
+if ! which "$command" >/dev/null 2>&1; then
   echo >&2 "The command $command is not installed. Please install it"
   exit 1
 fi
@@ -109,7 +110,8 @@ fi
 # curr_os=$(uname -s)
 
 # Iterate through the pkgs config section to install programs
-for os_name in ${stow_folders_keys[@]}; do
+# shellcheck disable=SC2154  # stow_folders_keys is populated by process_ini_file
+for os_name in "${stow_folders_keys[@]}"; do
   stow_folders=$(get_value "stow_folders" "$os_name")
 
   printf "\nWill now iterate through the following directories: \n\t- $(echo "$stow_folders" | sed "s/,/\n\t- /g")"

@@ -29,5 +29,5 @@ if [ -n "$TMUX" ]; then
     tmux new-session -ds "$selected_name" -c "$selected"
   fi
   tmux switch-client -t="$selected_name"
-  return 0
+  exit 0
 fi
