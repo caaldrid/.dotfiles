@@ -66,7 +66,7 @@ if [ "$OPT_S" = false ] && [ "$OPT_C" = false ]; then
       os_name=$(uname -s)
       if [[ "$os_name" == "Darwin" ]]; then
         install_cmd="sudo -Hu '$brewser' brew install"
-        echo $install_cmd
+        echo "$install_cmd"
       fi
     fi
 
