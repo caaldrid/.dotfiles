@@ -8,7 +8,7 @@ if [[ $# -eq 1 ]]; then
 else
   dirs=()
   # Direct children of $HOME/Code
-  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d -not -name "github.com" 2>/dev/null)
   # Grandchildren of $HOME/Code/github.com (if it exists)
   if [[ -d "$HOME/Code/github.com" ]]; then
     while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
