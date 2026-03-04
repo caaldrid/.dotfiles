@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
       - name: Run shellcheck
-        uses: ludeeus/action-shellcheck@master
-        with:
-          ignore_paths: tmux/.config/tmux/plugins
+        run: shellcheck run.sh bin/.local/scripts/*.sh
 
   stylua:
     name: Stylua
