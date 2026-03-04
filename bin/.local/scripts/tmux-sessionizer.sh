@@ -48,8 +48,8 @@ setup_panes() {
   local session=$1
   local dir=$2
 
-  # Split vertically: right pane takes 25%, left keeps 75%
-  tmux split-window -t "$session" -h -p 25 -c "$dir"
+  # Split vertically: right pane takes 10%, left keeps 90%
+  tmux split-window -t "$session" -h -p 10 -c "$dir"
 
   # Split right pane horizontally: bottom takes 38% of window height
   tmux split-window -t "$session" -v -p 38 -c "$dir"
