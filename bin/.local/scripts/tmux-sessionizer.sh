@@ -6,7 +6,7 @@ load_brew
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
+  selected=$(find "$HOME/Code" \( -name ".git" -type d -o -name "go.mod" -o -name "Cargo.toml" -o -name "package.json" -o -name "pyproject.toml" \) -prune -exec dirname {} \; 2>/dev/null | sort -u | fzf --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
 fi
 
 if [[ -z $selected ]]; then
