@@ -6,13 +6,12 @@ load_brew
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
+  mkdir -p "$HOME/Code/github.com"
   dirs=()
   # Direct children of $HOME/Code
   while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d -not -name "github.com" 2>/dev/null)
-  # Grandchildren of $HOME/Code/github.com (if it exists)
-  if [[ -d "$HOME/Code/github.com" ]]; then
-    while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
-  fi
+  # Grandchildren of $HOME/Code/github.com
+  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
   fzf_out=$(printf '%s\n' "${dirs[@]}" | sort -u | fzf --print-query --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
   fzf_exit=$?
   query=$(awk 'NR==1' <<< "$fzf_out")
