@@ -6,7 +6,14 @@ load_brew
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find "$HOME/Code" \( -name ".git" -type d -o -name "go.mod" -o -name "Cargo.toml" -o -name "package.json" -o -name "pyproject.toml" \) -prune -exec dirname {} \; 2>/dev/null | sort -u | fzf --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
+  dirs=()
+  # Direct children of $HOME/Code
+  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+  # Grandchildren of $HOME/Code/github.com (if it exists)
+  if [[ -d "$HOME/Code/github.com" ]]; then
+    while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
+  fi
+  selected=$(printf '%s\n' "${dirs[@]}" | sort -u | fzf --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
 fi
 
 if [[ -z $selected ]]; then
