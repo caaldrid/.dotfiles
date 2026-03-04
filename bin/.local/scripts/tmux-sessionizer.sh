@@ -8,10 +8,12 @@ if [[ $# -eq 1 ]]; then
 else
   mkdir -p "$HOME/Code/github.com"
   dirs=()
-  # Direct children of $HOME/Code
-  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d -not -name "github.com" 2>/dev/null)
+  # Direct children of $HOME/Code (excluding expanded dirs)
+  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d -not -name "github.com" -not -name "playground" 2>/dev/null)
   # Grandchildren of $HOME/Code/github.com
   while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
+  # Children of $HOME/Code/playground (if it exists)
+  while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/playground" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
   fzf_out=$(printf '%s\n' "${dirs[@]}" | sort -u | fzf --print-query --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
   fzf_exit=$?
   query=$(awk 'NR==1' <<< "$fzf_out")
