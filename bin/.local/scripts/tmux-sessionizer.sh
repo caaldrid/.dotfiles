@@ -48,8 +48,8 @@ setup_panes() {
   local session=$1
   local dir=$2
 
-  # Split vertically: right pane takes 10%, left keeps 90%
-  tmux split-window -t "$session" -h -l 10% -c "$dir"
+  # Split vertically: right pane takes 25%, left keeps 75%
+  tmux split-window -t "$session" -h -l 25% -c "$dir"
 
   # Split right pane horizontally: bottom takes 38% of window height
   tmux split-window -t "$session" -v -l 38% -c "$dir"
@@ -64,9 +64,12 @@ setup_panes() {
   tmux select-pane -t "${session}.0"
 }
 
+term_width=$(tput cols)
+term_height=$(tput lines)
+
 # If there is no running tmux session then create a detached session and attach to it
 if [ -z "$tmux_running" ]; then
-  tmux new-session -ds "$selected_name" -c "$selected"
+  tmux new-session -ds "$selected_name" -c "$selected" -x "$term_width" -y "$term_height"
   setup_panes "$selected_name" "$selected"
   tmux attach-session -t "$selected_name"
   exit 0
@@ -75,7 +78,7 @@ fi
 # If we are in a tmux session then check if we need to make a new session for the selection or just switch to it
 if [ -n "$TMUX" ]; then
   if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected"
+    tmux new-session -ds "$selected_name" -c "$selected" -x "$term_width" -y "$term_height"
     setup_panes "$selected_name" "$selected"
   fi
   tmux switch-client -t="$selected_name"
@@ -84,7 +87,7 @@ fi
 
 # Tmux is running but we are not inside it — attach (or create and attach)
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-  tmux new-session -ds "$selected_name" -c "$selected"
+  tmux new-session -ds "$selected_name" -c "$selected" -x "$term_width" -y "$term_height"
   setup_panes "$selected_name" "$selected"
 fi
 tmux attach-session -t "$selected_name"
