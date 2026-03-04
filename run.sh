@@ -62,10 +62,11 @@ if [ "$OPT_S" = false ] && [ "$OPT_C" = false ]; then
     install_cmd=$(get_value "installer_cmd" "$pkg_installer")
 
     # Make sure to user brewuser on mac
-    if [[ "$pkg_installer" == "brew" ]]; then
+    if [[ "$pkg_installer" == "brew" ]] || [[ "$pkg_installer" == "brew_cask" ]]; then
       os_name=$(uname -s)
       if [[ "$os_name" == "Darwin" ]]; then
-        install_cmd="sudo -Hu '$brewser' brew install"
+        cask_flag=$([[ "$pkg_installer" == "brew_cask" ]] && echo " --cask" || echo "")
+        install_cmd="sudo -Hu '$brewser' brew install${cask_flag}"
         echo "$install_cmd"
       fi
     fi
