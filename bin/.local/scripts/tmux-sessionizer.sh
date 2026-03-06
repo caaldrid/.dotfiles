@@ -14,7 +14,40 @@ else
   while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/github.com" -mindepth 2 -maxdepth 2 -type d 2>/dev/null)
   # Children of $HOME/Code/playground (if it exists)
   while IFS= read -r d; do dirs+=("$d"); done < <(find "$HOME/Code/playground" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
-  fzf_out=$(printf '%s\n' "${dirs[@]}" | sort -u | fzf --print-query --style full --color dark --preview "lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 {}" --preview-window=left:20%)
+
+  # Remote GitHub repos not yet checked out locally (loaded from cache for speed)
+  gh_cache="$HOME/.cache/tmux-sessionizer-gh-repos"
+  mkdir -p "$(dirname "$gh_cache")"
+  remote_repos=()
+
+  if [[ ! -f "$gh_cache" ]]; then
+    # First run: fetch synchronously so the list isn't blank
+    gh repo list --limit 200 --json nameWithOwner --jq '.[].nameWithOwner' 2>/dev/null > "$gh_cache"
+  elif ! find "$gh_cache" -mmin -720 -type f 2>/dev/null | grep -q .; then
+    # Cache is stale — refresh in background, use stale data for now
+    (gh repo list --limit 200 --json nameWithOwner --jq '.[].nameWithOwner' 2>/dev/null \
+      > "${gh_cache}.tmp" && mv "${gh_cache}.tmp" "$gh_cache") &
+    disown
+  fi
+
+  while IFS= read -r nwo; do
+    if [[ ! -d "$HOME/Code/github.com/$nwo" ]]; then
+      remote_repos+=("[gh] $nwo")
+    fi
+  done < "$gh_cache"
+
+  gh_user=$(gh api user --jq '.login' 2>/dev/null)
+
+  preview_cmd='item={}
+if [[ "$item" == \[gh\]* ]]; then
+  repo="${item#\[gh\] }"
+  gh repo view "$repo" 2>/dev/null || echo "Remote repo: $repo"
+else
+  lsd -lag --blocks=git,name --color=always --icon=always --icon-theme=fancy --tree --depth=2 "$item"
+fi'
+
+  all_items=("${dirs[@]}" "${remote_repos[@]}")
+  fzf_out=$(printf '%s\n' "${all_items[@]}" | sort -u | fzf --print-query --style full --color dark --preview "$preview_cmd" --preview-window=left:20%)
   fzf_exit=$?
   query=$(awk 'NR==1' <<< "$fzf_out")
   selected=$(awk 'NR==2' <<< "$fzf_out")
@@ -24,9 +57,17 @@ else
     exit 0
   fi
 
+  # Remote repo selected — clone it locally
+  if [[ "$selected" == "[gh] "* ]]; then
+    nameWithOwner="${selected#"[gh] "}"
+    owner="${nameWithOwner%%/*}"
+    new_dir="$HOME/Code/github.com/$nameWithOwner"
+    mkdir -p "$HOME/Code/github.com/$owner"
+    git clone "https://github.com/$nameWithOwner.git" "$new_dir" || exit 1
+    selected="$new_dir"
+
   # No existing dir selected but user typed a name — create a new GitHub repo
-  if [[ -z $selected && -n $query ]]; then
-    gh_user=$(gh api user --jq '.login' 2>/dev/null)
+  elif [[ -z $selected && -n $query ]]; then
     if [[ -z $gh_user ]]; then
       echo "tmux-sessionizer: gh not authenticated, cannot create repo" >&2
       exit 1
@@ -35,6 +76,7 @@ else
     mkdir -p "$HOME/Code/github.com/$gh_user"
     gh repo create "$query" --private || exit 1
     git clone "https://github.com/$gh_user/$query.git" "$new_dir" || exit 1
+    echo "$gh_user/$query" >> "$gh_cache"
     selected="$new_dir"
   fi
 fi
