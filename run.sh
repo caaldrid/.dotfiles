@@ -98,6 +98,22 @@ if [ "$OPT_S" = false ] && [ "$OPT_C" = false ]; then
   popd || exit
 fi
 
+# macOS: configure passwordless sudo for brew so brew commands don't prompt for a password.
+# brew runs as a dedicated owner user (brewser), and sudo -Hu is used to invoke it.
+# The sudoers rule is scoped only to /opt/homebrew/bin/brew — no blanket privilege escalation.
+# sudoers.d files must be root-owned and cannot be symlinks, so this cannot be managed by stow.
+if [[ "$(uname -s)" == "Darwin" ]] && [[ -n "$brewser" ]] && [ "$OPT_C" = false ]; then
+  current_user=$(whoami)
+  sudoers_file="/etc/sudoers.d/brew-nopasswd"
+  rule="$current_user ALL=($brewser) NOPASSWD: /opt/homebrew/bin/brew"
+  if ! sudo grep -qF "$rule" "$sudoers_file" 2>/dev/null; then
+    echo "Configuring passwordless sudo for brew (one-time, requires your password)..."
+    printf '%s\n' "$rule" | sudo tee "$sudoers_file" > /dev/null
+    sudo chmod 0440 "$sudoers_file"
+    echo "Done. brew will no longer prompt for a password."
+  fi
+fi
+
 # Run the .dotfile script to set up configurations
 printf "\n---------- SETTING UP CONFIGS  ----------"
 # Throw an error if stow is not installed

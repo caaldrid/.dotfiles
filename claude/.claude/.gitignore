@@ -10,6 +10,7 @@ history.jsonl
 paste-cache/
 projects/
 session-env/
+sessions/
 shell-snapshots/
 telemetry/
 temp/
