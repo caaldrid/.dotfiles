@@ -4,6 +4,7 @@
 # Generated / machine-local
 backups/
 cache/
+mcp-needs-auth-cache.json
 debug/
 file-history/
 history.jsonl
