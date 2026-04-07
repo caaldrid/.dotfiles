@@ -22,12 +22,12 @@ then
   setopt COMPLETE_IN_WORD
 fi
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/carlos/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
+if [[ "$os_name" == "Darwin" ]]; then
+  # The following lines have been added by Docker Desktop to enable Docker CLI completions.
+  fpath=(/Users/carlos/.docker/completions $fpath)
+  compinit -u
+  # End of Docker CLI completions
+fi
 export EDITOR=nvim
 
 # Initialize atuin
