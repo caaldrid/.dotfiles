@@ -11,3 +11,6 @@
 !/bin/.local/scripts
 
 /wayland/.config/hypr/scripts/alttab/*.png
+
+**/.DS_Store
+claude/.claude/.caveman-active
