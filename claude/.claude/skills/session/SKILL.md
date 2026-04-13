@@ -48,6 +48,11 @@ It is re-launched by Claude on each `/session next` or `/session extend` call fo
 
 Run `date` to get current time. Calculate minutes until stop time by hand — do not run python3. If less than 30 minutes, tell user and stop.
 
+**Step 1b — Handle energy parameter**
+
+- If `energy` param provided: use it and set the `energy` frontmatter property on today's daily note via `obsidian property:set name="energy" value="<level>"`.
+- If not provided: check today's daily note via `obsidian daily:read`. If it exists, read energy via `obsidian property:read name="energy"`. If empty or no daily note exists, tell user to open today's daily note in Obsidian first, then re-run `/session start`.
+
 **Step 2 — Get tasks**
 
 Check if `TODO.md` exists in current directory.
@@ -97,6 +102,8 @@ If yes:
 1. Write `~/.claude/temp/session.json` with `current_pomodoro: 0`
 2. Launch timer for pomodoro 0 (see Timer Script section above)
 3. Confirm started. Show first task.
+
+**IMPORTANT: Never tell the user to take a break.** The timer handles that. Claude's job during a pomodoro is to assist with work. Only `/session next` or `/session extend` (triggered by the user after the timer fires) should advance the session state.
 
 ---
 
@@ -153,13 +160,17 @@ If no file — say no active session.
 ### `/session end`
 
 1. `kill $(cat ~/.claude/temp/session-timer.pid) 2>/dev/null`
-2. `rm -f ~/.claude/temp/session.json ~/.claude/temp/session-timer.sh ~/.claude/temp/session-timer.pid`
-3. Ask what actually got done
-4. Update TODO.md — move completed subtasks to Done, leave unfinished in In Progress
-5. Ask: "Blocked on anything?"
+2. Ask what actually got done
+3. Update TODO.md — move completed subtasks to Done, leave unfinished in In Progress
+4. Ask: "Blocked on anything?"
    - If yes: ask which task and why. Add a "## Blocked" section to TODO.md if it doesn't exist. Move the task there with a one-line note about the blocker.
    - If no: skip
-6. Confirm session ended
+5. Append completed tasks to today's daily note via `obsidian daily:append`
+6. Set `struggled` property on today's daily: `true` if any task hit extend_streak >= 2, `false` otherwise.
+   - Get path first: `obsidian daily:path`
+   - Set property: `obsidian property:set name="struggled" value="<true|false>" path="<daily-path>"`
+7. `rm -f ~/.claude/temp/session.json ~/.claude/temp/session-timer.sh ~/.claude/temp/session-timer.pid`
+8. Confirm session ended
 
 ---
 
