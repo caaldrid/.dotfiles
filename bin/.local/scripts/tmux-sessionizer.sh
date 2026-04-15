@@ -92,15 +92,20 @@ setup_panes() {
   local session=$1
   local dir=$2
 
-  # Window 1: nvim (left 75%) + claude (right 25%)
-  tmux split-window -t "${session}:1" -h -l 25% -c "$dir"
-  tmux send-keys -t "${session}:1.1" "claude" Enter
-  tmux send-keys -t "${session}:1.0" "nvim --listen '${TMPDIR:-/tmp}nvim-${session}.sock' ." Enter
-  tmux select-pane -t "${session}:1.0"
+  # Create persistent claude session for this repo (detached, toggle via prefix+C-c)
+  if ! tmux has-session -t "${session}-claude" 2>/dev/null; then
+    tmux new-session -d -s "${session}-claude" -c "$dir"
+    tmux send-keys -t "${session}-claude" "claude" Enter
+  fi
+}
 
-  # Window 2: plain terminal
-  tmux new-window -t "${session}" -c "$dir" -n "term"
-  tmux select-window -t "${session}:1"
+new_nvim_session() {
+  local session=$1
+  local dir=$2
+  # Start nvim directly as the session command — no send-keys race condition
+  tmux new-session -ds "$session" -c "$dir" -x "$term_width" -y "$term_height" \
+    "nvim --listen '${TMPDIR:-/tmp}nvim-${session}.sock' ."
+  setup_panes "$session" "$dir"
 }
 
 term_width=$(tput cols)
@@ -108,8 +113,7 @@ term_height=$(tput lines)
 
 # If there is no running tmux session then create a detached session and attach to it
 if [ -z "$tmux_running" ]; then
-  tmux new-session -ds "$selected_name" -c "$selected" -x "$term_width" -y "$term_height"
-  setup_panes "$selected_name" "$selected"
+  new_nvim_session "$selected_name" "$selected"
   tmux attach-session -t "$selected_name"
   exit 0
 fi
@@ -117,8 +121,7 @@ fi
 # If we are in a tmux session then check if we need to make a new session for the selection or just switch to it
 if [ -n "$TMUX" ]; then
   if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected" -x "$term_width" -y "$term_height"
-    setup_panes "$selected_name" "$selected"
+    new_nvim_session "$selected_name" "$selected"
   fi
   tmux switch-client -t="$selected_name"
   exit 0
@@ -126,7 +129,6 @@ fi
 
 # Tmux is running but we are not inside it — attach (or create and attach)
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-  tmux new-session -ds "$selected_name" -c "$selected" -x "$term_width" -y "$term_height"
-  setup_panes "$selected_name" "$selected"
+  new_nvim_session "$selected_name" "$selected"
 fi
 tmux attach-session -t "$selected_name"
