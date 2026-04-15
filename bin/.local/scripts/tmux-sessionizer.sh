@@ -92,20 +92,15 @@ setup_panes() {
   local session=$1
   local dir=$2
 
-  # Split vertically: right pane takes 25%, left keeps 75%
-  tmux split-window -t "$session" -h -l 25% -c "$dir"
+  # Window 1: nvim (left 75%) + claude (right 25%)
+  tmux split-window -t "${session}:1" -h -l 25% -c "$dir"
+  tmux send-keys -t "${session}:1.1" "claude" Enter
+  tmux send-keys -t "${session}:1.0" "nvim --listen '${TMPDIR:-/tmp}nvim-${session}.sock' ." Enter
+  tmux select-pane -t "${session}:1.0"
 
-  # Split right pane horizontally: bottom takes 38% of window height
-  tmux split-window -t "$session" -v -l 38% -c "$dir"
-
-  # Run claude in top right pane
-  tmux send-keys -t "${session}.1" "claude" Enter
-
-  # Run nvim in left pane as a server so Claude Code hooks can refresh buffers
-  tmux send-keys -t "${session}.0" "nvim --listen '${TMPDIR:-/tmp}nvim-${session}.sock' ." Enter
-
-  # Focus left pane
-  tmux select-pane -t "${session}.0"
+  # Window 2: plain terminal
+  tmux new-window -t "${session}" -c "$dir" -n "term"
+  tmux select-window -t "${session}:1"
 }
 
 term_width=$(tput cols)
