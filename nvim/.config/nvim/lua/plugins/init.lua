@@ -120,7 +120,6 @@ return {
   { import = "configs.typescript-tools" },
   { import = "configs.blink-completion" },
   { import = "configs.neotest" },
-  { import = "configs.opencode" },
   { import = "configs.tabby" },
   { import = "configs.lualine" },
 }
