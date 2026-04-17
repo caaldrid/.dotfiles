@@ -11,3 +11,11 @@ addToPathFront() {
         export PATH=$1:$PATH
     fi
 }
+
+ghostty() {
+    if [ "$(uname -s)" = Linux ]; then
+        flatpak run com.mitchellh.ghostty "$@"
+    else
+        command ghostty "$@"
+    fi
+}
