@@ -165,12 +165,12 @@ If no file — say no active session.
 4. Ask: "Blocked on anything?"
    - If yes: ask which task and why. Add a "## Blocked" section to TODO.md if it doesn't exist. Move the task there with a one-line note about the blocker.
    - If no: skip
-5. Append completed tasks to today's daily note via `obsidian daily:append`
-6. Set `struggled` property on today's daily: `true` if any task hit extend_streak >= 2, `false` otherwise.
-   - Get path first: `obsidian daily:path`
-   - Set property: `obsidian property:set name="struggled" value="<true|false>" path="<daily-path>"`
-7. `rm -f ~/.claude/temp/session.json ~/.claude/temp/session-timer.sh ~/.claude/temp/session-timer.pid`
-8. Confirm session ended
+5. Append completed tasks to today's daily note under `## Session Log`:
+   - Read today's daily note first
+   - If `## Session Log` section does NOT exist: append `\n## Session Log\n` followed by the task list
+   - If `## Session Log` section DOES exist: append only the task items under the existing section (no duplicate header)
+6. `rm -f ~/.claude/temp/session.json ~/.claude/temp/session-timer.sh ~/.claude/temp/session-timer.pid`
+7. Confirm session ended
 
 ---
 

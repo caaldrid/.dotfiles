@@ -94,7 +94,10 @@ new_nvim_session() {
 	# Start nvim directly as the session command — no send-keys race condition
 	tmux new-session -ds "$session" -c "$dir" -x "$term_width" -y "$term_height" \
 		"nvim --listen '${TMPDIR:-/tmp}nvim-${session}.sock' ."
-	tmux new-window -d -t "${session}" -c "$dir" -n "claude" "claude"
+	# Split Claude as right pane (20%) in the nvim window
+	tmux split-window -d -t "${session}:1" -h -p 20 -c "$dir" "claude"
+	# Keep focus on nvim pane (pane 0)
+	tmux select-pane -t "${session}:1.0"
 }
 
 term_width=$(tput cols)

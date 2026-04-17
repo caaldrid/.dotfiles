@@ -1,4 +1,5 @@
 {
+  "model": "opus",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -53,5 +54,9 @@
       }
     }
   },
-  "autoUpdatesChannel": "stable"
+  "autoUpdatesChannel": "stable",
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"/Users/carlos/Code/github.com/caaldrid/.dotfiles/claude/.claude/plugins/cache/caveman/caveman/80a317e4725f/hooks/caveman-statusline.sh\""
+  }
 }
