@@ -3,7 +3,7 @@ addToPath "$HOME/.cargo/bin"
 addToPath "$HOME/.local/scripts"
 addToPath "$HOME/.local/bin"
 addToPath "$HOME/.docker/bin/"
-addToPath "$HOME/.lmstudio"
+addToPath "$HOME/.lmstudio/bin"
 
 os_name=$(uname -s)
 if [[ "$os_name" == "Darwin" ]]; then
