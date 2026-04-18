@@ -35,6 +35,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
+  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "caveman@caveman": true,
@@ -54,9 +58,5 @@
       }
     }
   },
-  "autoUpdatesChannel": "stable",
-  "statusLine": {
-    "type": "command",
-    "command": "bash \"/Users/carlos/Code/github.com/caaldrid/.dotfiles/claude/.claude/plugins/cache/caveman/caveman/80a317e4725f/hooks/caveman-statusline.sh\""
-  }
+  "autoUpdatesChannel": "stable"
 }
