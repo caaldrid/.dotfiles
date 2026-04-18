@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Cross-platform Obsidian CLI wrapper
+if [ "$(uname -s)" = "Linux" ]; then
+    exec flatpak run --command=/app/obsidian-cli md.obsidian.Obsidian "$@"
+else
+    exec /Applications/Obsidian.app/Contents/MacOS/obsidian "$@"
+fi
