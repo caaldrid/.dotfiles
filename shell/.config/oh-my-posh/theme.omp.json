@@ -19,6 +19,17 @@
         },
         {
           "properties": {
+            "cache_duration": "none"
+          },
+          "template": "{{ if .SSHSession }} \udb85\ude16 {{ .UserName }}@{{ .HostName }} {{ end }}",
+          "foreground": "#FFFFFF",
+          "powerline_symbol": "\ue0b0",
+          "background": "#7b3f9e",
+          "type": "session",
+          "style": "powerline"
+        },
+        {
+          "properties": {
             "cache_duration": "none",
             "home_icon": "~",
             "style": "full"
