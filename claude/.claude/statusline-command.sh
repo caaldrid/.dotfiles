@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Read JSON session data from stdin
 input=$(cat)
@@ -148,8 +148,8 @@ parts=()
 [ -n "$rate_part" ] && parts+=("$rate_part")
 
 result=""
-for i in "${!parts[@]}"; do
-  if [ "$i" -gt 0 ]; then
+for (( i = 1; i <= ${#parts[@]}; i++ )); do
+  if [ "$i" -gt 1 ]; then
     result="${result} $(printf '%b' "$d") "
   fi
   result="${result}${parts[$i]}"
