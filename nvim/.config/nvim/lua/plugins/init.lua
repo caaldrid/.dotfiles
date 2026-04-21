@@ -60,7 +60,11 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
-      filters = { custom = { "^\\.git$", "__pycache__", "\\.pyc$" } },
+      filters = {
+        git_ignored = true,
+        exclude = { "docs" },
+        custom = { "^\\.git$", "__pycache__", "\\.pyc$" },
+      },
       renderer = {
         highlight_git = "icon",
         icons = {
