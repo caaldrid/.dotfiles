@@ -1,4 +1,5 @@
 /shell/.config/zsh/.zsh_history
+/shell/.config/zsh/.zsh_sessions
 /shell/.config/zsh/.zcompdump*
 /shell/.config/go/**
 /shell/.config/gh/**
@@ -14,3 +15,4 @@
 
 **/.DS_Store
 claude/.claude/.caveman-active
+claude/.claude/stats-cache.json
