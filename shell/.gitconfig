@@ -1,15 +1,12 @@
-[user]
-	name = caaldrid
-	email = aldrichsea@outlook.com
-[init]
-	defaultBranch = main
-[core]
-	editor = vim
+[includeIf "gitdir:~/Code/github.com/caaldrid/"]
+	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/Code/work/"]
+	path = ~/.gitconfig-work
+[push]
+	autoSetupRemote = true
 [credential "https://github.com"]
 	helper = 
 	helper = "!f() { if [ \"$(uname -s)\" = Linux ]; then /home/linuxbrew/.linuxbrew/bin/gh auth git-credential \"$@\"; else /opt/homebrew/bin/gh auth git-credential \"$@\"; fi; };f"
 [credential "https://gist.github.com"]
 	helper = 
 	helper = "!f() { if [ \"$(uname -s)\" = Linux ]; then /home/linuxbrew/.linuxbrew/bin/gh auth git-credential \"$@\"; else /opt/homebrew/bin/gh auth git-credential \"$@\"; fi; };f"
-[push]
-	autoSetupRemote = true

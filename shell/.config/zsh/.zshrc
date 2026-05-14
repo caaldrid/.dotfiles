@@ -67,3 +67,4 @@ source $XDG_CONFIG_HOME/custom/aliases.zsh
 # Pull in all my custom keybinds
 source $XDG_CONFIG_HOME/custom/keybinds.zsh
 
+precmd_functions+=(switch_gh_user)

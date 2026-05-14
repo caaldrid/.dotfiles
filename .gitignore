@@ -11,8 +11,9 @@
 /bin/.local/*
 !/bin/.local/scripts
 
-/wayland/.config/hypr/scripts/alttab/*.png
-
 **/.DS_Store
+
 claude/.claude/.caveman-active
 claude/.claude/stats-cache.json
+
+.gitconfig-work
