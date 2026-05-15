@@ -20,7 +20,7 @@ gh_active_user() {
 # Switch GitHub user silently
 switch_gh_user() {
     if [[ "$PWD" == "$HOME/Code/work/"* ]]; then
-        git config get user.username | xargs gh auth switch -u 2>/dev/null
+        gh auth status --json hosts | jq --argjson dirs "$(ls ~/Code/work/github.com/ | jq -R . | jq -s .)" '.hosts | add | map(.login) | map(select(. as $l | $dirs | index($l) != null))[]' | xargs gh auth switch -u 2>/dev/null
     else
         gh auth switch -u caaldrid 2>/dev/null
     fi
